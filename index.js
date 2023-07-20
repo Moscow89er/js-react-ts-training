@@ -173,3 +173,28 @@ console.log(get(obj, 'a.b.c'));  // 5
 console.log(get(obj, 'a.b'));    // {c: 5}
 console.log(get(obj, 'a.b.d'));  // undefined
 console.log(get(obj, 'a.x.c'));  // undefined
+
+
+// функция генерация рандомного цвета
+// function generateColor() {
+//     const letters = '0123456789ABCDEF';
+//     let color = '#';
+
+//     for (let i = 0; i < 6; i++) {
+//         color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+// }
+
+// console.log(generateColor());
+
+
+function generateColor() {
+    function randomColor() {
+        return Math.floor(Math.random() * 255);
+    }
+
+    return `rgb(${randomColor()}, ${randomColor()}, ${randomColor()})`;
+}
+
+console.log(generateColor());
