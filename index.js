@@ -1,103 +1,77 @@
-// const person = {
-//     name: 'Nick',
-//     age: 33,
-//     email: 'nick@test.tu'
-// }
+let cars = ['Honda', 'Kia', 'Toyota', 'BMW', 'Audi', 'VW', 'Hummer'];
+let numbers = [1,1,1,2,3,4,2,2,3,5,7,8,9,7,6,5,4,4,3,2,2,3,5,6,7];
+let nums = [1,4,65,43,23,2,55,32,78,1,5,3]
 
-const person = Object.assign({
-    name: 'Gleb',
-    lastname: 'Jiglov',
-    age: 33,
-    workAt: 'Tochka',
-    greet: function() {
-        console.log(`Hello, my name is ${this.name}`)
-    }
+// Как получить рандомный элемент массива
+let randNum = numbers[Math.floor(Math.random() * (numbers.length))]
+
+console.log(randNum)
+
+// Как заполнить массив данными
+let newArr = new Array(7).fill(7)
+
+// Как найти индекс последнего входенияы
+let lastIndex = nums.lastIndexOf(1)
+
+// Как сделать реверс массива
+let reversedCars = cars.reverse()
+
+// Как можно найти одинаковые элементы в двух разных массивах
+// Пример 1
+// let numbersSet = new Set(numbers)
+// let commonNumbers = nums.filter(num => numbersSet.has(num))
+// let sameNumbers = [...new Set(commonNumbers)]
+
+// Пример 2
+let sameNumbers = [...new Set(numbers)].filter(item => nums.includes(item))
+
+// Методы очищения массива
+// Пример 1
+// cars = [];
+
+// Пример 2
+// numbers = null;
+
+// Пример 3
+numbers.splice(0, numbers.length)
+
+// Как получить доступ к ключи объекта, если он находится в массиве
+let newCars = [
+    {car: 'Kia', color: 'Black'},
+    {car: 'Hummer', color: 'Pink'},
+    {car: 'Ford', color: 'Blue'},
+    {car: 'Skoda', color: 'Green'},
+]
+
+let car_name = Array.from(newCars, ({car}) => car)
+
+// ложные значения в JS
+let arr = [0, 'green', null, 2, undefined, true, NaN, false, ''];
+
+// Перебор массива не используя метод Map
+let sortedArr = numbers.forEach((element) => {
+    return element * 2
 })
 
-const entries = Object.entries(person)
+// Задача нужно удалить определенный элементы массива
+cars.splice(0, 2, 'Tesla', 'Жигуленок')
 
-for (const [key, value] of entries) {
-    console.log(`${key}: ${value}`) // перебираем ключи и свойства в удобном для созерцания виде
-}
+// Задача удалить повторяющиеся элементы из массива
+// // Решение 1
+// let uniqNums = [...new Set(numbers)];
 
-const keys = Object.keys(person); 
+//Решение 2
+let uniqNums = Array.from(new Set(numbers))
 
-for (const key of keys) {
-    console.log(key) // перебираем ключи объекта
-}
+// Задача вернуть из массива только trufy значения
+let trufy = arr.filter(Boolean);
 
-const values = Object.values(person);
+// let trufy = arr.filter((element) => {
+//     return Boolean(element) === true;
+// })
 
-for (const value of values) {
-    console.log(value) // перебираем свойства объекта
-}
+// Задача конвертировать массив в объект
+let obj = {...cars}
 
-person.greet()
-
-// const newPerson = Object.assign(person)
-
-// const isEqual = Object.is(person, newPerson)
-
-// console.log(newPerson)
-// console.log(isEqual)
-
-// console.log(person)
-// console.log(Object.keys(person))
-// console.log(Object.values(person))
-
-// Object.freeze(person) // замараживает объект, его свойства не могут быть удалены
-
-// Object.seal(person) // в таком случае можно изменять только существующие свойства
-
-// person.name = 'Vova'
-
-// console.log(person.name)
-// console.log(Object.entries(person))
-
-// const newPerson = Object.assign({
-//     email: 'gleb007@test.ru'
-// }, person)
-
-// console.log(person)
-
-
-
-// const sharapov = Object.assign({
-//     name: 'Vova',
-//     surname: 'Sharapov',
-//     email: 'vova001@test.ru'
-// }, person)
-
-// console.log(sharapov === newPerson)
-// console.log(newPerson)
-// console.log(sharapov)
-
-// let headOfBand;
-
-// function createDeepCopy(obj) {
-//     if (typeof obj !== 'object' || obj === null) {
-//         return obj
-//     }
-
-//     let copy;
-
-//     if (Array.isArray(obj)) {
-//         copy = obj.map((item) => {
-//             return createDeepCopy(item)
-//         })
-//     } else {
-//         copy = {}
-//         for (let key in obj) {
-//             if (obj.hasOwnProperty(key)) {
-//                 copy[key] = createDeepCopy(obj[key])
-//             }
-//         }
-//     }
-
-//     return copy;
-// }
-
-// headOfBand = createDeepCopy(sharapov)
-
-// console.log(headOfBand === sharapov)
-// console.log(headOfBand)
+// Задача сумма всех элементов
+let sum = numbers.reduce((acc, cur) => acc + cur, 0)
