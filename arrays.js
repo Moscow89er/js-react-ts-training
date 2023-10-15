@@ -1,77 +1,99 @@
-let cars = ['Honda', 'Kia', 'Toyota', 'BMW', 'Audi', 'VW', 'Hummer'];
-let numbers = [1,1,1,2,3,4,2,2,3,5,7,8,9,7,6,5,4,4,3,2,2,3,5,6,7];
+const cars = ['Honda', 'Kia', 'Toyota', 'BMW', 'Audi', 'VW', 'Hummer'];
+const numbers = [1,1,1,2,3,4,2,2,3,5,7,8,9,7,6,5,4,4,3,2,2,3,5,6,7];
 let nums = [1,4,65,43,23,2,55,32,78,1,5,3]
+const arr = [false, 'red', 0, 2, "", null, true, NaN, undefined];
 
-// Как получить рандомный элемент массива
-let randNum = numbers[Math.floor(Math.random() * (numbers.length))]
+// 1) Суммируем все значения в массиве
+// function sum(numbers) { // вар. 1
+//     let sum = 0;
 
-console.log(randNum)
+//     for (let i = 0; i < numbers.length; i++) {
+//         sum += numbers[i];
+//     }
 
-// Как заполнить массив данными
-let newArr = new Array(7).fill(7)
+//     return sum;
+// }
 
-// Как найти индекс последнего входенияы
-let lastIndex = nums.lastIndexOf(1)
+// function sum(arr) { // вар. 2
+//     return arr.reduce((acc, cur) => (acc + cur), 0);
+// }
+// console.log(sum(numbers));
 
-// Как сделать реверс массива
-let reversedCars = cars.reverse()
+// const sum = nums.reduce((acc, cur) => acc + cur); // вар. 3
+// console.log(sum);
 
-// Как можно найти одинаковые элементы в двух разных массивах
-// Пример 1
-// let numbersSet = new Set(numbers)
-// let commonNumbers = nums.filter(num => numbersSet.has(num))
-// let sameNumbers = [...new Set(commonNumbers)]
 
-// Пример 2
-let sameNumbers = [...new Set(numbers)].filter(item => nums.includes(item))
 
-// Методы очищения массива
-// Пример 1
-// cars = [];
+// 2) Выводим правдивые значения
+// const new_arr = arr.filter(Boolean);
+// console.log(new_arr);
 
-// Пример 2
-// numbers = null;
 
-// Пример 3
-numbers.splice(0, numbers.length)
 
-// Как получить доступ к ключи объекта, если он находится в массиве
-let newCars = [
-    {car: 'Kia', color: 'Black'},
-    {car: 'Hummer', color: 'Pink'},
-    {car: 'Ford', color: 'Blue'},
-    {car: 'Skoda', color: 'Green'},
-]
+// 3) Конвертация массива в объект
+// const obj = { ...cars };
+// console.log(cars);
+// console.log(obj);
 
-let car_name = Array.from(newCars, ({car}) => car)
 
-// ложные значения в JS
-let arr = [0, 'green', null, 2, undefined, true, NaN, false, ''];
 
-// Перебор массива не используя метод Map
-let sortedArr = numbers.forEach((element) => {
-    return element * 2
-})
+// 4) Как извлечь уникальное значение из массива
+// const uni_nums = [...new Set(numbers)]; // вар. 1
+// const uni_nums = Array.from(new Set(nums)); // вар.2
+// console.log(uni_nums);
 
-// Задача нужно удалить определенный элементы массива
-cars.splice(0, 2, 'Tesla', 'Жигуленок')
 
-// Задача удалить повторяющиеся элементы из массива
-// // Решение 1
-// let uniqNums = [...new Set(numbers)];
 
-//Решение 2
-let uniqNums = Array.from(new Set(numbers))
+// 5) Как заменить конкретное значение в массиве
+// cars.splice(0,2, 'Nissan', 'Tesla');
+// console.log(cars);
 
-// Задача вернуть из массива только trufy значения
-let trufy = arr.filter(Boolean);
 
-// let trufy = arr.filter((element) => {
-//     return Boolean(element) === true;
-// })
 
-// Задача конвертировать массив в объект
-let obj = {...cars}
+// 6) Перебор массива без метода map
+// const new_cars = [
+//     {car: 'Honda', color: 'Red'},
+//     {car: 'Toyota', color: 'Green'},
+//     {car: 'Seat', color: 'Blue'},
+//     {car: 'BMW', color: 'Yellow'},
+// ]
+// const car_name = Array.from(new_cars, ({car}) => car);
+// console.log(car_name);
 
-// Задача сумма всех элементов
-let sum = numbers.reduce((acc, cur) => acc + cur, 0)
+
+
+// 7) Очищение массива
+// nums = []; // вар. 1
+
+// nums.splice(0, nums.length); // вар. 2 - наиболее праильный
+// console.log(nums);
+
+
+
+// 8) Найти пересечения в двух массивах
+// const new_nums = [...new Set(nums)].filter(item => numbers.includes(item));
+// console.log(new_nums);
+
+
+
+// 9) Как сделать реверс массива
+// const reversedCars = cars.reverse();
+// console.log(reversedCars);
+
+
+
+// 10) Как получить индекс поледнего вхождения элемента в массиве
+// const last_index = nums.lastIndexOf(1);
+// console.log(last_index);
+
+
+
+// 11) Как заполнить массив значениями
+// const new_arr = new Array(10).fill(1);
+// console.log(new_arr);
+
+
+
+// 12) Как найти случайное число из массива
+const rand_num = nums[(Math.floor(Math.random() * (nums.length)))];
+console.log(rand_num);

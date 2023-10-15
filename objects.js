@@ -4,35 +4,35 @@
 //     email: 'nick@test.tu'
 // }
 
-const person = Object.assign({
-    name: 'Gleb',
-    lastname: 'Jiglov',
-    age: 33,
-    workAt: 'Tochka',
-    greet: function() {
-        console.log(`Hello, my name is ${this.name}`)
-    }
-})
+// const person = Object.assign({
+//     name: 'Gleb',
+//     lastname: 'Jiglov',
+//     age: 33,
+//     workAt: 'Tochka',
+//     greet: function() {
+//         console.log(`Hello, my name is ${this.name}`)
+//     }
+// })
 
-const entries = Object.entries(person)
+// const entries = Object.entries(person)
 
-for (const [key, value] of entries) {
-    console.log(`${key}: ${value}`) // перебираем ключи и свойства в удобном для созерцания виде
-}
+// for (const [key, value] of entries) {
+//     console.log(`${key}: ${value}`) // перебираем ключи и свойства в удобном для созерцания виде
+// }
 
-const keys = Object.keys(person); 
+// const keys = Object.keys(person); 
 
-for (const key of keys) {
-    console.log(key) // перебираем ключи объекта
-}
+// for (const key of keys) {
+//     console.log(key) // перебираем ключи объекта
+// }
 
-const values = Object.values(person);
+// const values = Object.values(person);
 
-for (const value of values) {
-    console.log(value) // перебираем свойства объекта
-}
+// for (const value of values) {
+//     console.log(value) // перебираем свойства объекта
+// }
 
-person.greet()
+// person.greet()
 
 // const newPerson = Object.assign(person)
 
