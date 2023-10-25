@@ -186,3 +186,35 @@
 // for (const [key, value] of entries) {
 //     console.log(`Ключ: ${key}, Свойство: ${value}`);
 // }
+
+
+
+// function getPrimeNumber(n) {
+//     let arr = [];
+
+//     label:   
+//     for (let i = 2; i <= n; i++) {
+//         for (let j = 2; j < i; j++) {
+//             if (i % j == 0) continue label;
+//         }
+//         arr.push(i);
+//     }
+    
+//     console.log(arr);
+// }
+
+// getPrime(55);
+
+
+
+// function getThematic() {
+//     let random = Math.floor(Math.random() * 100);
+
+//     if (random <= 50) {
+//         alert("Детали и ресурсы по Контур Толку после нашей встречи");
+//     } else {
+//         alert("Всё о Контур Толке: запись встречи, ресурсы и тарифы");
+//     }
+// }
+
+// getThematic();
