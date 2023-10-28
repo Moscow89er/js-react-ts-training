@@ -1,48 +1,24 @@
-// objectsToPrimitive.js
+// number.js
 // 1)
-// let user = {
-//     name: "John",
-//     money: 1000,
-//     [Symbol.toPrimitive](hint) {
-//         alert(`hint: ${hint}`);
-//         return hint === "string" ? this.name : this.money;
-//     }
-// };
+// let firstNum = +prompt("Enter first number", "");
+// let secondNum = +prompt("Enter second number", "");
 
-// alert(user > 999);
-// alert(user);
-// alert("Nick" == user);
-// alert("John" == user);
+// alert(firstNum + secondNum);
 
 // 2)
-// let user = {
-//     name: "Nick",
-//     money: 1000, 
-
-//     toString() {
-//         return this.name;
-//     },
-
-//     valueOf() {
-//         return this.money;
-//     }
-// }
-
-// alert(user > 999); // true
-// alert(user); // "Nick"
-// alert("Nick" == user); // false
-// alert("John" == user); // false
+// alert(Math.round(6.35 * 10) / 10);
 
 // 3)
-// let obj = {
-//     toString() {
-//         return "2";
-//     }
-// }
+function readNumber() {
+    let num;
 
-// alert(obj * 2); // 4
-// alert(obj + 2); // 22
+    do {
+        num = +prompt("Enter number", "");
+    } while (!isFinite(num));
 
-// 4)
-// let obj = {};
-// alert(1 > obj);
+    if (num == null || num == "") return null;
+
+    return +num;
+}
+
+alert(readNumber());
