@@ -41,3 +41,17 @@
 // accumulator.read();
 // accumulator.read();
 // alert(accumulator.value);
+
+// 4)
+// function A() {
+//     return {};
+// }
+
+// function B(obj) {
+//     obj = this;  
+// }
+
+// let a = new A();
+// let b = new B(a);
+
+// alert( a == b );
