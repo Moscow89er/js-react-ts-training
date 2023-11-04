@@ -128,24 +128,69 @@
 // alert( arr );
 
 // 6)
-function Calculator() {
-    this.calculate = function(str) {
-        let splitedStr = str.split(' ');
+// a)
+// function Calculator() {
+//     this.calculate = function(str) {
+//         let splitedStr = str.split(' ');
 
-        let operator = splitedStr[1];
+//         let operator = splitedStr[1];
 
-        if (operator === '+') {
-            return +splitedStr[0] + +splitedStr[2];
-        }
+//         if (operator === '+') {
+//             return +splitedStr[0] + +splitedStr[2];
+//         }
 
-        if (operator === '-') {
-            return +splitedStr[0] - +splitedStr[2];
-        }
+//         if (operator === '-') {
+//             return +splitedStr[0] - +splitedStr[2];
+//         }
 
-        return null;
-    }
-}
+//         return null;
+//     }
+// }
 
-let calc = new Calculator;
 
-alert( calc.calculate("33 + 7") );
+// b)
+// function Calculator() {
+//     this.methods = {
+//         "+": (a, b) => a + b,
+//         "-": (a, b) => a - b
+//     }
+
+//     this.calculate = function(str) {
+//         let split = str.split(' ');
+//         let a = +split[0];
+//         let operator = split[1];
+//         let b = +split[2];
+
+//         if (!this.methods[operator] || isNaN(a) || isNaN(b)) {
+//             return NaN;
+//         }
+
+//         return this.methods[operator](a, b);
+//     }
+
+//     this.addMethod = function(name, func) {
+//         this.methods[name] = func;
+//     } 
+// }
+
+// let calc = new Calculator;
+// alert( calc.calculate("33 + 7") );
+
+// let powerCalc = new Calculator;
+// powerCalc.addMethod("*", (a, b) => a * b);
+// powerCalc.addMethod("/", (a, b) => a / b);
+// powerCalc.addMethod("**", (a, b) => a ** b);
+
+// let result = powerCalc.calculate("2 ** 3");
+// alert( result );
+
+// 7)
+// let vasya = { name: "Вася", age: 25 };
+// let petya = { name: "Петя", age: 30 };
+// let masha = { name: "Маша", age: 28 };
+
+// let users = [ vasya, petya, masha ];
+
+// let names = users.map(item => item.name);
+
+// console.log(names);
