@@ -259,17 +259,33 @@
 // console.log(multiplyNumsExceptSelf([-1, 0, 0, -3, 3])); // [0, 0, 0, 0, 0]
 
 // 8)
-let vasya = { name: "Вася", surname: "Пупкин", id: 1 };
-let petya = { name: "Петя", surname: "Иванов", id: 2 };
-let masha = { name: "Маша", surname: "Петрова", id: 3 };
+// let vasya = { name: "Вася", surname: "Пупкин", id: 1 };
+// let petya = { name: "Петя", surname: "Иванов", id: 2 };
+// let masha = { name: "Маша", surname: "Петрова", id: 3 };
 
-let users = [ vasya, petya, masha ];
+// let users = [ vasya, petya, masha ];
 
-let usersMapped = users.map((user) => ({
-    fullName: user.name + " " + user.surname, // `${user.name} ${user.surname}`
-    id: user.id
-}))
+// let usersMapped = users.map((user) => ({
+//     fullName: user.name + " " + user.surname, // `${user.name} ${user.surname}`
+//     id: user.id
+// }))
 
-alert( usersMapped[0].id );
-alert( usersMapped[0].fullName );
-console.log(usersMapped);
+// alert( usersMapped[0].id );
+// alert( usersMapped[0].fullName );
+// console.log(usersMapped);
+
+// 9)
+let vasya = { name: "Вася", age: 25 };
+let petya = { name: "Петя", age: 30 };
+let masha = { name: "Маша", age: 28 };
+
+let arr = [ vasya, petya, masha ];
+
+function sortByAge(users) {
+    return users.sort((a, b) => a.age - b.age);
+}
+
+sortByAge(arr);
+alert(arr[0].name); // Вася
+alert(arr[1].name); // Маша
+alert(arr[2].name); // Петя
