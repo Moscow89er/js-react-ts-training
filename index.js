@@ -275,17 +275,31 @@
 // console.log(usersMapped);
 
 // 9)
-let vasya = { name: "Вася", age: 25 };
-let petya = { name: "Петя", age: 30 };
-let masha = { name: "Маша", age: 28 };
+// let vasya = { name: "Вася", age: 25 };
+// let petya = { name: "Петя", age: 30 };
+// let masha = { name: "Маша", age: 28 };
 
-let arr = [ vasya, petya, masha ];
+// let arr = [ vasya, petya, masha ];
 
-function sortByAge(users) {
-    return users.sort((a, b) => a.age - b.age);
+// function sortByAge(users) {
+//     return users.sort((a, b) => a.age - b.age);
+// }
+
+// sortByAge(arr);
+// alert(arr[0].name); // Вася
+// alert(arr[1].name); // Маша
+// alert(arr[2].name); // Петя
+
+// Многомерные массивы
+let rows = 8;
+let cols = 8;
+let matrix = [];
+
+for (let i = 0; i < rows; i++) {
+    matrix[i] = []; // Создаем новый массив для каждой строки
+    for (let j = 0; j < cols; j++) {
+        matrix[i][j] = i * cols + j; // Присваиваем значения элементам массива
+    }
 }
 
-sortByAge(arr);
-alert(arr[0].name); // Вася
-alert(arr[1].name); // Маша
-alert(arr[2].name); // Петя
+console.log(matrix);
