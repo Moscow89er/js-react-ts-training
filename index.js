@@ -291,15 +291,24 @@
 // alert(arr[2].name); // Петя
 
 // Многомерные массивы
-let rows = 8;
-let cols = 8;
-let matrix = [];
+// let rows = 8;
+// let cols = 8;
+// let matrix = [];
 
-for (let i = 0; i < rows; i++) {
-    matrix[i] = []; // Создаем новый массив для каждой строки
-    for (let j = 0; j < cols; j++) {
-        matrix[i][j] = i * cols + j; // Присваиваем значения элементам массива
-    }
-}
+// for (let i = 0; i < rows; i++) {
+//     matrix[i] = []; // Создаем новый массив для каждой строки
+//     for (let j = 0; j < cols; j++) {
+//         matrix[i][j] = i * cols + j; // Присваиваем значения элементам массива
+//     }
+// }
 
-console.log(matrix);
+// console.log(matrix);
+
+// 10)
+shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
+
+let arr = [1, 2, 3];
+
+console.log(shuffle(arr));
+console.log(shuffle(arr));
+console.log(shuffle(arr));
