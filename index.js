@@ -305,10 +305,60 @@
 // console.log(matrix);
 
 // 10)
-shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
+// shuffle = (arr) => arr.sort(() => Math.random() - 0.5);
 
-let arr = [1, 2, 3];
+// let arr = [1, 2, 3];
 
-console.log(shuffle(arr));
-console.log(shuffle(arr));
-console.log(shuffle(arr));
+// console.log(shuffle(arr));
+// console.log(shuffle(arr));
+// console.log(shuffle(arr));
+
+// 11)
+// getAverageAge = (arr) => {
+//     return Math.floor(arr.map((user) => user.age).reduce((acc, curV) => (acc + curV), 0) / arr.length);
+// }
+
+// let vasya = { name: "Вася", age: 25 };
+// let petya = { name: "Петя", age: 30 };
+// let masha = { name: "Маша", age: 29 };
+
+// let arr = [ vasya, petya, masha ];
+
+// alert( getAverageAge(arr) );
+
+// 12)
+// a)
+// function unique(arr) {
+//     let obj = new Set(arr);
+
+//     return Array.from(obj);
+// }
+
+// let strings = ["кришна", "кришна", "харе", "харе",
+//   "харе", "харе", "кришна", "кришна", ":-O"
+// ];
+
+// console.log(unique(strings));
+
+// b)
+function unique(arr) {
+    let result = [];
+
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i; j < arr.length; j++) {
+            if (arr[j] != arr[i]) {
+                if (result.includes(arr[j]) === false) {
+                    result.push(arr[j]);
+                }
+            }
+        }
+    }
+
+    return result;
+}
+
+let strings = ["кришна", "кришна", "харе", "харе",
+  "харе", "харе", "кришна", "кришна", ":-O"
+];
+
+console.log(unique(strings));
