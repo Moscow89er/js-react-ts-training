@@ -92,25 +92,109 @@
 // console.log(newArr);
 
 // Метод работы unshift под капотом
-const unshift = function(arr, ...arg) {
-    let shiftBy = arg.length;
+// const unshift = function(arr, ...arg) {
+//     let shiftBy = arg.length;
 
-    for (let i = arr.length - 1; i >= 0; i--) {
-        arr[i + shiftBy] = arr[i];
-    }
+//     for (let i = arr.length - 1; i >= 0; i--) {
+//         arr[i + shiftBy] = arr[i];
+//     }
 
-    for (let i = 0; i < arg.length; i++) {
-        arr[i] = arg[i];
-    }
+//     for (let i = 0; i < arg.length; i++) {
+//         arr[i] = arg[i];
+//     }
 
-    return arr.length;
-}
+//     return arr.length;
+// }
 
-let arr = [1,2,3,4,5];
-let newArr = [];
+// let arr = [1,2,3,4,5];
+// let newArr = [];
 
-let result = unshift(arr, 6, 7, 8, 'Nick');
-let newResult = unshift(newArr, 6, 7);
+// let result = unshift(arr, 6, 7, 8, 'Nick');
+// let newResult = unshift(newArr, 6, 7);
 
-console.log(result);
-console.log(newResult);
+// console.log(result);
+// console.log(newResult);
+
+
+// Метод every под капотом
+// const every = function(arr, callback) {
+//     for (let i = 0; i < arr.length; i++) {
+//         if (callback(arr[i]) === false) {
+//             return false;
+//         }
+//     }
+
+//     return true;
+// }
+
+// Метод some под капотом
+// const some = function(arr, callback) {
+//     for (let i = 0; i < arr.length; i++) {
+//         if (callback(arr[i]) === true) return true; 
+//     }
+
+//     return false;
+// }
+
+// const arr = [1,2,3,4,5];
+
+// retBool1 = (a) => {
+//     return a === 1 ? true : false;
+// }
+
+// retBool2 = (a) => {
+//     return a >= 1 ? true : false;
+// }
+
+// console.log(some(arr, retBool1));
+// console.log(some(arr, retBool2));
+
+
+// Метод forEach под капотом
+// const forEach = function(arr, callback) {
+//     for (let i = 0; i < arr.length; i++) {
+//         callback(arr[i], i, arr);
+//     }
+//}
+
+
+// Метод map под капотом
+// const map = function(arr, callback) {
+//     const resultedArr = [];
+
+//     for (let i = 0; i < arr.length; i++) {
+//         resultedArr[resultedArr.length++] = callback(arr[i], i, arr);
+//     }
+
+//     return resultedArr;
+// }
+
+// const arr = [1,2,3,4,5];
+
+// sumFunk = (a) => {
+//     return a + 2;
+// }
+
+// console.log(map(arr, sumFunk));
+
+
+// Метод filter под капотом
+// const filter = function(arr, callback) {
+//     const resultedArr = [];
+
+//     for (let i = 0; i < arr.length; i++) {
+//         if (callback(arr[i], i, arr)) { // проверка на истинность значения
+//             resultedArr[resultedArr.length++] = arr[i];
+//         }
+//     }
+
+//     return resultedArr;
+// }
+
+// const arr = [1, 2, 'Nick', 5, 'Hito'];
+
+// callbackFunc = (el) => {
+//     if (typeof el === 'string') return el;
+// }
+
+// console.log(filter(arr, callbackFunc));
