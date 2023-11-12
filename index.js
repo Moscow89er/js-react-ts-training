@@ -198,3 +198,37 @@
 // }
 
 // console.log(filter(arr, callbackFunc));
+
+// const arr = [1, 2, 3, 4, 5];
+
+// const result = arr.reduce((acc, value) => {
+//     acc.push(value**2);
+//     return acc;
+// }, []);
+
+// const result = arr.reduce((acc, value) => {
+// 	acc = [...acc, value**2];
+//     return acc;
+// }, []);
+
+// console.log(result);
+
+// Метод reduce под капотом:
+const reduce = function(arr, reducerFunc, init) {
+    let acc;
+    let i;
+
+    if (init !== undefined) {
+        acc = init;
+        i = 0;
+    } else {
+        acc = arr[0];
+        i = 1;
+    }
+
+    for (i; i < arr.length; i++) {
+        acc = reducerFunc(acc, arr[i], i);
+    }
+
+    return acc;
+}
