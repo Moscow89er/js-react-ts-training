@@ -615,3 +615,27 @@
 
 //     return acc;
 // }
+
+// arrayMethods
+
+// Как работает под капотом метод find
+// const find = function(arr, callback) {
+//     for (let i = 0; i < arr.length; i++) {
+//         if (callback(arr[i])) {
+//             return arr[i];
+//         }
+//     }
+
+//     return undefined;
+// }
+
+// Как работает метод findIndex под капотом
+// const findIndex = function(arr, callback) {
+//     for (let i = 0; i < arr.length; i++) {
+//         if (callback(arr[i])) {
+//             return i;
+//         }
+//     }
+
+//     return -1;
+// }
