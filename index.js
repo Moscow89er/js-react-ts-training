@@ -22,24 +22,68 @@
   
 // alert( unique(values) );
 
-// 2)
-aclean = (arr) => {
-    let newArr = arr.sort((a, b) => a.length - b.length);
+// 2) Мое решение
+// a)
+// aclean = (arr) => {
+//     const convertedArr = [];
+//     const uniqArr = [];
 
+//     for (let i = 0; i < arr.length; i++) {
+//         const convertedEl = arr[i].toLowerCase().split('').sort().join('');
 
+//         if (!convertedArr.includes(convertedEl)) {
+//             convertedArr.push(convertedEl);
+//             uniqArr.push(arr[i]);
+//         }
+//     }
 
-    for (let i = 0; i < newArr.length; i++) {
-        for (let j = 1; j < newArr.length; j++) {
-            if (arr[j].lenght === arr[i].length) {
-                console.log(arr[j].toString().split());
-                console.log(arr[i].toString().split());
-            }
-        }
-    }
+//     return uniqArr;
+// }
 
-    return newArr;
-}
+// b)
+// const aclean = function(arr) {
+//     const map = new Map();
 
-let arr = ["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"];
+//     for (let word of arr) {
+//         const sorted = word.toLowerCase().split('').sort().join('');
+//         map.set(sorted, word);
+//     }
 
-alert( aclean(arr) );
+//     return Array.from(map.values());
+// }
+
+// c)
+// function aclean(arr) {
+//     let set = new Set();
+//     let uniqArr = [];
+
+//     for (let word of arr) {
+//         const sorted = word.toLowerCase().split('').sort().join('');
+        
+//         if (!set.has(sorted)) {
+//             set.add(sorted);
+//             uniqArr.push(word);
+//         }
+//     }
+
+//     return uniqArr;
+// }
+
+// const arr = ["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"];
+// const emptyArr = [];
+
+// alert( aclean(arr) );
+// alert( aclean(emptyArr) );
+
+// 3)
+// const map = new Map();
+
+// map.set("name", "John");
+
+// const keys = Array.from(map.keys());
+// const objKeys = Object.fromEntries(map.entries());
+
+// keys.push("more");
+
+// console.log(keys);
+// console.log(objKeys);
