@@ -26,11 +26,9 @@ map.set(arr, "somePropArr");
 map.set(123, 456);
 map.set("key", "value");
 
-map.clear();
-
-for (let [key, value] of map) {
-    console.log(key, value);
-}
+// for (let [key, value] of map) {
+//     console.log(key, value);
+// }
 
 // 4)
 const mapTheSecond = new Map();
@@ -55,7 +53,7 @@ function toFilterMap(objMap) {
     return filteredMap;
 }
 
-console.log(toFilterMap(mapTheSecond));
+// console.log(toFilterMap(mapTheSecond));
 
 // 5)
 function toReverseMap(mapObj) {
@@ -70,7 +68,7 @@ function toReverseMap(mapObj) {
     return reversedMap;
 }
 
-console.log(toReverseMap(mapTheSecond));
+// console.log(toReverseMap(mapTheSecond));
 
 // 6)
 const mapTheThird = new Map;
@@ -94,10 +92,10 @@ function toSumMapPrices(mapObj) {
     return sum;
 }
 
-console.log(toSumMapPrices(mapTheThird));
-console.log(toSumMapPrices(mapTheFourth));
+// console.log(toSumMapPrices(mapTheThird));
+// console.log(toSumMapPrices(mapTheFourth));
 
-// 5)
+// 5) Эту задачу нужно перерешать
 let arrayOfObj = [
     {name: 'orange', category: 'fruit'},
     {name: 'iPhone', category: 'mobile device'},
@@ -107,25 +105,64 @@ let arrayOfObj = [
 ];
 
 function toGroupByCategory(arr) {
-    const groupByCategoryObj = new Map();
-
-    const arrOfNames = [];
+    const groupByCategoryMap = new Map();
 
     arr.forEach(({name, category}) => {
-        if (groupByCategoryObj.has(!category)) {
-            groupByCategoryObj.set(category, [name])
+        if (!groupByCategoryMap.has(category)) {
+            groupByCategoryMap.set(category, [name]);
+        } else {
+            const existingCategory = groupByCategoryMap.get(category);
+            existingCategory.push(name);
+            groupByCategoryMap.set(category, existingCategory);
         }
-
-        if (groupByCategoryObj.has(category)) {
-            groupByCategoryObj.set(category, [...name])
-        }
-
-        arrOfNames.push(name);
-
-        groupByCategoryObj.set(category, [name])
     })
 
-    return groupByCategoryObj;
+    return groupByCategoryMap;
 }
 
-console.log(toGroupByCategory(arrayOfObj));
+// console.log(toGroupByCategory(arrayOfObj));
+
+// 6)
+const arrOfIntegers = [58,3,6,92,93,68,25,5,38,77,77,77,5,68,92,93];
+
+function toCountInteger(arr) {
+    const map = new Map();
+
+    for (let num of arr) {
+        if(!map.has(num)) {
+            let count = 0;
+            map.set(num, count = 1);
+        } else {
+            let existingCount = map.get(num);
+            map.set(num, existingCount + 1);
+        }        
+    }
+
+    return map;
+}
+
+// console.log(toCountInteger(arrOfIntegers));
+
+// 7)
+const map2 = new Map();
+
+map2.set(obj, "somePropObj2");
+map2.set(arr, "somePropArr");
+map2.set(123, 4567);
+map2.set("key", "value2");
+
+function toJoinMaps(firstMap, secondMap) {
+    const joinedMap = new Map();
+
+    for (let [key, value] of firstMap) {
+        joinedMap.set(key, value);
+    }
+
+    for (let [key, value] of secondMap) {
+        joinedMap.set(key, value);
+    }
+
+    return joinedMap;
+}
+
+console.log(toJoinMaps(map, map2));
