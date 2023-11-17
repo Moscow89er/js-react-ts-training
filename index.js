@@ -147,7 +147,7 @@ function toCountInteger(arr) {
 const map2 = new Map();
 
 map2.set(obj, "somePropObj2");
-map2.set(arr, "somePropArr");
+map2.set(arr, "somePropArr2");
 map2.set(123, 4567);
 map2.set("key", "value2");
 
@@ -165,4 +165,161 @@ function toJoinMaps(firstMap, secondMap) {
     return joinedMap;
 }
 
-console.log(toJoinMaps(map, map2));
+// console.log(toJoinMaps(map, map2));
+
+// SET
+
+// 1)
+function makeUniq(arr) {
+    const uniqEl = new Set(arr);
+
+    return [...uniqEl];
+}
+
+// console.log(makeUniq(arrOfIntegers));
+
+// 2)
+const arrOfIntegers2 = [58,3,6,68,5,38,5,68,12,4,7,5,8,0,4,3,2];
+
+function identifyIntersection(firstArr, secondArr) {
+    const firstSet = new Set(firstArr);
+    const secondSet = new Set(secondArr);
+
+    let resultedArr = [];
+
+    firstSet.forEach((value) => {
+        if (secondSet.has(value)) {
+            resultedArr.push(value);
+        }
+    })
+
+    return resultedArr;
+}
+
+// console.log(identifyIntersection(arrOfIntegers, arrOfIntegers2));
+
+// 3)
+function identifyTheDifference(firstArr, secondArr) {
+    const firstSet = new Set(firstArr);
+    const secondSet = new Set(secondArr);
+
+    let resultedArr = [];
+
+    for (let value of firstSet.values()) {
+        if (!secondSet.has(value)) {
+            resultedArr.push(value);
+        }
+    }
+
+    return resultedArr;
+}
+
+// console.log(identifyTheDifference(arrOfIntegers, arrOfIntegers2));
+
+// 4)
+function performASubsetCheck(firstArr, secondArr) {
+    const firstSet = new Set(firstArr);
+    const secondSet = new Set(secondArr);
+
+    for (let value of firstSet.values()) {
+        if (!secondSet.has(value)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// console.log(performASubsetCheck(arrOfIntegers, arrOfIntegers2));
+
+// 5)
+function toFindTheSymmetricDifference(firstArr, secondArr) {
+    const firstSet = new Set(firstArr);
+    const secondSet = new Set(secondArr);
+
+    const uniqArrOfFirstSet = [];
+    const uniqArrOfSecondSet = [];
+
+    for (let value of firstSet.values()) {
+        if (!secondSet.has(value)) {
+            uniqArrOfFirstSet.push(value);
+        }
+    }
+
+    for (let value of secondSet.values()) {
+        if (!firstSet.has(value)) {
+            uniqArrOfSecondSet.push(value);
+        }
+    }
+
+    const unionArr = uniqArrOfFirstSet.concat(uniqArrOfSecondSet);
+
+    const unionSet = new Set(unionArr);
+
+    return unionSet;
+}
+
+// console.log(toFindTheSymmetricDifference(arrOfIntegers, arrOfIntegers2));
+
+// 6)
+function toUnionSets(firstArr, secondArr) {
+    const firstSet = new Set(firstArr);
+    const secondSet = new Set(secondArr);
+
+    const unionSet = new Set([...firstSet, ...secondSet]);
+
+    return unionSet;
+}
+
+// console.log(toUnionSets(arrOfIntegers, arrOfIntegers2));
+
+// 7)
+function toFilter(arr, num) {
+    const set = new Set();
+
+    arr.forEach((value) => {
+        if (typeof value === 'number' && value > num) {
+            set.add(value);
+        }
+    }) 
+
+    return set;
+}
+
+// console.log(toFilter(arrOfIntegers, 7));
+
+// 8)
+const notUniqArrOfObj = [
+    {id: 1, userName: "Nick"},
+    {id: 2, userName: "Mick"},
+    {id: 3, userName: "Mike"},
+    {id: 4, userName: "Nicky"},
+    {id: 1, userName: "Nick"},
+    {id: 2, userName: "Mick"},
+    {id: 3, userName: "Mike"},
+    {id: 4, userName: "Nicky"},
+    {id: 3, userName: "Mike"},
+    {id: 4, userName: "Nicky"},
+]
+
+function getUniqArrOfObj(arr) {
+    const set = new Set();
+
+    const resultedArr = [];
+
+    for (let obj of arr) {
+        set.add(obj.id);
+    }
+
+    for (let obj of arr) {
+        console.log(obj);
+
+        if (set.has(obj.id) === obj.id) {
+            resultedArr.push(obj);
+        }
+    }
+
+    return resultedArr;
+}
+
+console.log(getUniqArrOfObj(notUniqArrOfObj));
