@@ -116,7 +116,7 @@ const groupByValues = function(obj) {
             acc[profession] = [];
         }
         
-        if (acc[profession] ) { 
+        if (acc[profession]) { 
             acc[profession].push(name);
         }
 
@@ -126,4 +126,12 @@ const groupByValues = function(obj) {
     return resultedObj;
 }
 
-console.log(groupByValues(peopleProfessions));
+// console.log(groupByValues(peopleProfessions));
+
+// 7)
+function toValidateObjValues(obj) {
+    return Object.values(obj).every((el) => typeof el === "number");
+}
+
+// console.log(toValidateObjValues(obj));
+// console.log(toValidateObjValues(objOfAges));
