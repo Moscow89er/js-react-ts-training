@@ -38,12 +38,92 @@ function toFilterByAge(obj) {
 // console.log(toFilterByAge(objOfAges));
 
 // 3)
+// a) мое решение
+// function toSwapKeysAndValues(obj) {
+//     const swapped = Object.entries(obj).reduce((acc, [key, value]) => {
+//         arr = [[value, key]];
+
+//         for (let i = 0; i < arr.length; i++) {
+//             acc.push(arr[i]);
+//         }
+
+//         return acc;
+//     }, [])
+
+//     return Object.fromEntries(swapped);
+// }
+
+// b) правильный вариант решения
 function toSwapKeysAndValues(obj) {
-    const swapped = Object.entries(obj).reduce((acc, ...) => {
-        
+    const swapped = Object.entries(obj).reduce((acc, [key, value]) => {
+        acc[value] = key;
+
+        return acc;
     }, {})
 
     return swapped;
 }
 
-console.log(toSwapKeysAndValues(objOfAges));
+// console.log(toSwapKeysAndValues(objOfAges));
+
+// 4)
+const sumOfAges = function(obj) {
+    return Object.values(obj).reduce((acc, cur) => acc + cur, 0);
+}
+
+// console.log(sumOfAges(objOfAges));
+
+// 5)
+// a)
+// searchForValue = (obj, valToFind) => {
+//     let keyToFind;
+
+//     Object.entries(obj).find(([key, value]) => {
+//         if (value === valToFind) {
+//             keyToFind = key;
+//         }
+//     });
+    
+//     return keyToFind;
+// }
+
+// b) улучшенная версия
+searchForKey = (obj, valToFind) => {
+    const entry = Object.entries(obj).find(([key, value]) => value === valToFind);
+
+    return entry ? entry[0] : "Value didn't exist! Try something else, please."
+}
+
+// console.log(searchForKey(obj, true));
+// console.log(searchForKey(objOfAges, 75));
+
+// 6)
+const peopleProfessions = {
+    "Alice": "Engineer",
+    "Bob": "Doctor",
+    "Clara": "Artist",
+    "David": "Teacher",
+    "Eva": "Scientist",
+    "Frank": "Writer",
+    "Nick": "Engineer",
+    "Igorr": "Scientist",
+    "Mick": "Artist"
+};
+
+const groupByValues = function(obj) {
+    const resultedObj = Object.entries(obj).reduce((acc, [name, profession]) => {
+        if (!acc[profession]) {
+            acc[profession] = [];
+        }
+        
+        if (acc[profession] ) { 
+            acc[profession].push(name);
+        }
+
+        return acc;
+    }, {});
+
+    return resultedObj;
+}
+
+console.log(groupByValues(peopleProfessions));
