@@ -1,137 +1,38 @@
-// keysValuesEntries.js
-const obj = {
-    name: "Nick",
-    age: 33,
-    hasDog: true
-}
+// date.js
 
 // 1)
-function toCountObjValues(obj) {
-    return Object.keys(obj).length;
-}
+const date = new Date(2012, 1, 20, 3, 12, 0, 0);
+const today = new Date();
 
-// console.log(toCountObjValues(obj));
+// alert(date);
 
 // 2)
-const objOfAges = {
-    nick: 34,
-    margo: 32,
-    nina: 27,
-    alex: 20,
-    igorr: 12,
-    roman: 5
+function getWeekDate(day) {
+    const weakDay = day.getDay();
+
+    switch(weakDay) {
+        case 0:
+            console.log('ВС');
+            break;
+        case 1:
+            console.log('ПН');
+            break;
+        case 2:
+            console.log('ВТ');
+            break;
+        case 3:
+            console.log('СР');
+            break;
+        case 4:
+            console.log('ЧТ');
+            break;
+        case 5:
+            console.log('ПТ');
+            break;
+        case 6:
+            console.log('СБ');
+    }
 }
 
-function toFilterByAge(obj) {
-    let resultedArr = [];
-    
-    Object.entries(obj).forEach((arr) => {
-        if (arr[1] >= 27) {
-            resultedArr.push(arr);
-        }
-    })
-
-    return Object.fromEntries(resultedArr);
-}
-
-
-// console.log(toFilterByAge(objOfAges));
-
-// 3)
-// a) мое решение
-// function toSwapKeysAndValues(obj) {
-//     const swapped = Object.entries(obj).reduce((acc, [key, value]) => {
-//         arr = [[value, key]];
-
-//         for (let i = 0; i < arr.length; i++) {
-//             acc.push(arr[i]);
-//         }
-
-//         return acc;
-//     }, [])
-
-//     return Object.fromEntries(swapped);
-// }
-
-// b) правильный вариант решения
-function toSwapKeysAndValues(obj) {
-    const swapped = Object.entries(obj).reduce((acc, [key, value]) => {
-        acc[value] = key;
-
-        return acc;
-    }, {})
-
-    return swapped;
-}
-
-// console.log(toSwapKeysAndValues(objOfAges));
-
-// 4)
-const sumOfAges = function(obj) {
-    return Object.values(obj).reduce((acc, cur) => acc + cur, 0);
-}
-
-// console.log(sumOfAges(objOfAges));
-
-// 5)
-// a)
-// searchForValue = (obj, valToFind) => {
-//     let keyToFind;
-
-//     Object.entries(obj).find(([key, value]) => {
-//         if (value === valToFind) {
-//             keyToFind = key;
-//         }
-//     });
-    
-//     return keyToFind;
-// }
-
-// b) улучшенная версия
-searchForKey = (obj, valToFind) => {
-    const entry = Object.entries(obj).find(([key, value]) => value === valToFind);
-
-    return entry ? entry[0] : "Value didn't exist! Try something else, please."
-}
-
-// console.log(searchForKey(obj, true));
-// console.log(searchForKey(objOfAges, 75));
-
-// 6)
-const peopleProfessions = {
-    "Alice": "Engineer",
-    "Bob": "Doctor",
-    "Clara": "Artist",
-    "David": "Teacher",
-    "Eva": "Scientist",
-    "Frank": "Writer",
-    "Nick": "Engineer",
-    "Igorr": "Scientist",
-    "Mick": "Artist"
-};
-
-const groupByValues = function(obj) {
-    const resultedObj = Object.entries(obj).reduce((acc, [name, profession]) => {
-        if (!acc[profession]) {
-            acc[profession] = [];
-        }
-        
-        if (acc[profession]) { 
-            acc[profession].push(name);
-        }
-
-        return acc;
-    }, {});
-
-    return resultedObj;
-}
-
-// console.log(groupByValues(peopleProfessions));
-
-// 7)
-function toValidateObjValues(obj) {
-    return Object.values(obj).every((el) => typeof el === "number");
-}
-
-// console.log(toValidateObjValues(obj));
-// console.log(toValidateObjValues(objOfAges));
+getWeekDate(date);
+getWeekDate(today);
