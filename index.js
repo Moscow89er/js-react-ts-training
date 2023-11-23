@@ -133,20 +133,66 @@ const fibonacci = function(n) {
     return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
-console.log(fibonacci(3));
-console.log(fibonacci(7));
+// console.log(fibonacci(3));
+// console.log(fibonacci(7));
 
-// b)
+// b) Самоя оптимальная версия по производительности
 const fibonacci2 = function(n) {
-    a = 0;
-    b = 0;
+    if (n === 0) return 0;
+    if (n === 1) return 1;
 
-    for (let i = 3; i <= n; i++) {
-       
+    let a = 0;
+    let b = 1;
+
+    for (let i = 2; i <= n; i++) {
+        let c = a + b;
+        a = b;
+        b = c;
     }
 
-    return prevNum1 + prevNum2;
+    return b;
 }
 
-console.log(fibonacci2(3));
-console.log(fibonacci2(7));
+// console.log(fibonacci2(3));
+// console.log(fibonacci2(7));
+// console.log(fibonacci2(77));
+
+// c)
+const fibonacci3 = function(n) {
+    return n <= 1 ? n : fibonacci3(n - 1) + fibonacci3(n - 2);
+}
+
+// console.log(fibonacci3(3));
+// console.log(fibonacci3(7));
+
+// 4)
+const list2 = {
+    value: 1,
+    next: {
+      value: 2,
+      next: {
+        value: 3,
+        next: {
+          value: 4,
+          next: null
+        }
+      }
+    }
+};
+
+const printList = function(list) {
+    // const entries = Object.entries(list);
+
+    // console.log(entries);
+
+    // for (let item of entries) {
+    //     console.log(item[1]);
+
+    //     let nestedItems = Object.entries(item);
+    //     for(let [{key, val}] of nestedItems) {
+    //         console.log([{key, val}]);
+    //     }
+    // }
+}
+
+printList(list2);
