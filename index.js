@@ -180,19 +180,112 @@ const list2 = {
     }
 };
 
-const printList = function(list) {
-    // const entries = Object.entries(list);
+const printListCycle = function(list) {
+    let template = list;
 
-    // console.log(entries);
-
-    // for (let item of entries) {
-    //     console.log(item[1]);
-
-    //     let nestedItems = Object.entries(item);
-    //     for(let [{key, val}] of nestedItems) {
-    //         console.log([{key, val}]);
-    //     }
-    // }
+    while (template) {
+        console.log(template.value);
+        template = template.next;
+    }
 }
 
-printList(list2);
+// printListCycle(list2);
+
+const printListRecursion = function(list) {
+    if (list === null) return;
+    
+    console.log(list.value);
+    printListRecursion(list.next);
+}
+
+// printListRecursion(list2);
+
+// 4)
+const printReversedListCycle = function(list) {
+    let template = list;
+    let arr = []
+
+    while (template) {
+        arr.push(template.value);
+        template = template.next;
+    }
+
+    arr.reverse().forEach((item) => console.log(item));
+}
+
+// printReversedListCycle(list2);
+
+const printReversedListRecursion = function(list, arr) {
+    let recursionArr = arr;
+
+    if(!recursionArr) {
+        recursionArr = [];
+    }
+
+    if (list === null) {
+        arr.reverse().forEach(item => console.log(item));
+        return;
+    };
+
+    recursionArr.push(list.value);
+    
+    printReversedListRecursion(list.next, recursionArr);
+}
+
+// printReversedListRecursion(list2);
+
+function printReverseList(list) {
+    if (list.next) {
+        printReverseList(list.next);
+    }
+
+    console.log(list.value);
+}
+
+// printReverseList(list2);
+
+// 5)
+let arrOfNums = [1,2,3,4,5];
+
+// a)
+function toSumRecursion(arr, sum) {
+    let sumOfRecursion = sum;
+
+    let slicedArr = arr.slice();
+
+    if (!sumOfRecursion) {
+        sumOfRecursion = 0;
+    }
+
+    if (arr.length === 0) {
+        return sumOfRecursion;
+    }
+
+    let a = slicedArr[0];
+
+    sumOfRecursion += a;
+
+    slicedArr.shift();
+
+    return toSumRecursion(slicedArr, sumOfRecursion);
+}
+
+// console.log(toSumRecursion(arrOfNums));
+
+// b) Оптимизированное решение
+function toSum(arr, sum = 0) {
+    if (arr.length === 0) return sum;
+
+    return toSum(arr.slice(1), sum += arr[0]);
+}
+
+// console.log(toSum(arrOfNums));
+
+// 6)
+const findFactorial = function(num) {
+    if (num === 0) return 1;
+
+    return num * findFactorial(num - 1);
+}
+
+console.log(findFactorial(7));
