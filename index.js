@@ -288,4 +288,53 @@ const findFactorial = function(num) {
     return num * findFactorial(num - 1);
 }
 
-console.log(findFactorial(7));
+// console.log(findFactorial(7));
+
+// 7)
+const findFibonacci = function(num) {
+    if (num === 0) return 0;
+    if (num === 1) return 1;
+
+    return findFibonacci(num - 1) + findFibonacci(num - 2);
+}
+
+// console.log(findFibonacci(2));
+// console.log(findFibonacci(3));
+// console.log(findFibonacci(7));
+
+const findFibonacciCycle = function(num) {
+    let a = 0;
+    let b = 1;
+
+    for (let i = 2; i <= num; i++) {
+        let c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return b;
+}
+
+// console.log(findFibonacciCycle(3));
+// console.log(findFibonacciCycle(7));
+// console.log(findFibonacciCycle(77));
+
+// 8)
+const str = "Строка наоборот";
+
+const toReverseString = function(str, arr = []) {
+    const firstSymbol = str.slice(0, 1);
+
+    if (str.length === 0) {
+        const resultedStr = arr.reverse();
+        return toReverseString(resultedStr, arr);
+    };
+
+    arr.push(firstSymbol);
+
+    console.log(str);
+
+    return toReverseString(str.slice(1), arr);
+}
+
+console.log(toReverseString(str));
