@@ -326,15 +326,54 @@ const toReverseString = function(str, arr = []) {
     const firstSymbol = str.slice(0, 1);
 
     if (str.length === 0) {
-        const resultedStr = arr.reverse();
-        return toReverseString(resultedStr, arr);
+        return arr.reverse().join('');
     };
 
     arr.push(firstSymbol);
-
-    console.log(str);
 
     return toReverseString(str.slice(1), arr);
 }
 
 console.log(toReverseString(str));
+
+// 9)
+const hanoiTower = {
+    kernel1: ["bigDisk", "mediumDisk", "smallDisk"],
+    kernel2: [],
+    kernel3: []
+}
+
+const puzzleSolutionOfHanoiTower = function(obj) {
+    obj.kernel2.push(obj.kernel1.pop());
+    obj.kernel3.push(obj.kernel1.pop());
+    obj.kernel1.push(obj.kernel2.pop());
+    obj.kernel2.push(obj.kernel3.pop());
+    obj.kernel2.push(obj.kernel1.pop());
+    obj.kernel3.push(obj.kernel1.pop());
+    obj.kernel1.push(obj.kernel2.pop());
+    obj.kernel3.push(obj.kernel2.pop());
+    obj.kernel3.push(obj.kernel1.pop());
+
+    return obj;
+}
+
+// console.log(puzzleSolutionOfHanoiTower(hanoiTower));
+
+function moveDisk(tower, from, to) {
+    const disc = tower[from].pop();
+    tower[to].push(disc);
+}
+
+function solveHanoiTower(tower, numDisks, sourse, target, auxiliary) {
+    if (numDisks === 1) {
+        moveDisk(tower, sourse, target);
+        return;
+    }
+
+    solveHanoiTower(tower, numDisks - 1, sourse, auxiliary, target);
+    moveDisk(tower, sourse, target);
+    solveHanoiTower(tower, numDisks - 1, auxiliary, target, sourse);
+}
+
+solveHanoiTower(hanoiTower, hanoiTower.kernel1.length, 'kernel1', 'kernel3', 'kernel2');
+console.log(hanoiTower);
