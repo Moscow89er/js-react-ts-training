@@ -16,7 +16,7 @@ function sum(initialNum) {
     return add;
 }
 
-console.log(sum(1)(2)(3).toString());
+// console.log(sum(1)(2)(3).toString());
 
 // b) решение для двух значений
 function sum2(a) {
@@ -25,7 +25,7 @@ function sum2(a) {
     }
 }
 
-console.log(sum2(1)(2));
+// console.log(sum2(1)(2));
 
 // 2)
 function inBetween(a, b) {
@@ -45,3 +45,39 @@ let arr = [1, 2, 3, 4, 5, 6, 7];
 // alert( arr.filter(inBetween(3, 6)) );
 
 // alert( arr.filter(inArray([1, 2, 10])) );
+
+// 3)
+function byField(key) {
+    return (a, b) => a[key] > b[key] ? 1 : -1;
+}
+
+let users = [
+    { name: "John", age: 20, surname: "Johnson" },
+    { name: "Pete", age: 18, surname: "Peterson" },
+    { name: "Ann", age: 19, surname: "Hathaway" }
+];
+
+// console.log(users.sort(byField('name')));
+// console.log(users.sort(byField('age')));
+// console.log(users.sort(byField('surname')));
+
+// 4)
+function makeArmy() {
+    let shooters = [];
+  
+    for (let i = 0; i < 10; i++) {
+        let shooter = function() {
+            alert( i );
+        };
+        shooters.push(shooter);
+    }
+    
+    return shooters;
+}
+  
+let army = makeArmy();
+
+
+army[0]();
+army[1]();
+army[2]();
