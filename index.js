@@ -60,7 +60,8 @@ function fibonacci(n) {
 
     return fibonacci(n - 1) + fibonacci(n - 2);
 }
-console.log(fibonacci(7));
+
+// console.log(fibonacci(7));
 
 // b)
 function fibonacciCircle(n) {
@@ -79,7 +80,7 @@ function fibonacciCircle(n) {
     return b;
 }
 
-console.log(fibonacciCircle(7));
+// console.log(fibonacciCircle(7));
 
 // 3)
 function traverseTree(node, action) { 
@@ -93,3 +94,12 @@ function traverseTree(node, action) {
         node.children.forEach(child => traverseTree(child, action));
     }
 }
+
+function recFunc(n) {
+    if (n === 0) return 0;
+
+    return n + recFunc(n - 1);
+}
+
+
+// console.log(recFunc(10));
