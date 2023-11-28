@@ -81,3 +81,48 @@ let army = makeArmy();
 army[0]();
 army[1]();
 army[2]();
+
+// 5)
+function createCounter() {
+    let counter = 0;
+
+    return function() {
+        return ++counter;
+    }
+}
+
+// const counter = createCounter();
+// console.log(counter());
+// console.log(counter());
+// console.log(counter());
+
+// 6)
+function trackValues(arg) {
+    let savedArr = arg;
+
+    return function(arg) {
+        savedArr.push(arg);
+
+        return savedArr;
+    }
+}
+
+// const tracker = trackValues([]);
+// console.log(tracker(1));
+// console.log(tracker(2));
+// console.log(tracker(3));
+
+// 7)
+function createMultiplier(n) {
+    let savedN = n;
+
+    return function(n) {
+        return savedN * n;
+    }
+}
+
+// const multiplierByTwo = createMultiplier(2);
+// const multiplierByThree = createMultiplier(3);
+
+// console.log(multiplierByTwo(5));
+// console.log(multiplierByThree(5));

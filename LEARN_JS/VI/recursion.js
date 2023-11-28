@@ -377,3 +377,62 @@ function solveHanoiTower(tower, numDisks, sourse, target, auxiliary) {
 
 solveHanoiTower(hanoiTower, hanoiTower.kernel1.length, 'kernel1', 'kernel3', 'kernel2');
 console.log(hanoiTower);
+
+// 10)
+function factorial(n) {
+    if (n === 0) return 1;
+
+    return n * factorial(n - 1);
+}
+
+// console.log(factorial(5));
+
+// 11)
+function fibonacci(n) {
+    if (n === 0 || n === 1) return n;
+
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// console.log(fibonacci(7));
+
+// 12)
+function fibonacciCircle(n) {
+    if (n === 0) return 0;
+    if (n === 1) return 1;
+
+    let a = 0;
+    let b = 1;
+
+    for (let i = 2; i <= n; i++) {
+        let c = a + b;
+        a = b;
+        b = c;
+    }
+
+    return b;
+}
+
+// console.log(fibonacciCircle(7));
+
+// 13)
+function traverseTree(node, action) { 
+    if (!node) return;
+
+    action(node); // node — текущий узел дерева; функция, которую нужно применить к каждому узлу
+
+    // Этот код предполагает, что структура дерева представлена в виде объектов,
+    // где каждый узел содержит ссылки на своих детей (если они есть) в массиве children
+    if (node.children) {
+        node.children.forEach(child => traverseTree(child, action));
+    }
+}
+
+function recFunc(n) {
+    if (n === 0) return 0;
+
+    return n + recFunc(n - 1);
+}
+
+
+// console.log(recFunc(10));
