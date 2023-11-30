@@ -317,7 +317,7 @@ const findFibonacciCycle = function(num) {
 
 // console.log(findFibonacciCycle(3));
 // console.log(findFibonacciCycle(7));
-// console.log(findFibonacciCycle(77));
+console.log(findFibonacciCycle(77));
 
 // 8)
 const str = "Строка наоборот";
@@ -436,3 +436,7 @@ function recFunc(n) {
 
 
 // console.log(recFunc(10));
+
+// РЕШИТЬ ЗАДАЧУ НА ГЛУБОКОЕ КОПИРОВАНИЕ ОБЪЕКТА
+
+// РЕШИТЬ ЗАДАЧУ НА МЕМОИЗАЦИЮ ЗАДАЧИ ФИБОНАЧЧИ

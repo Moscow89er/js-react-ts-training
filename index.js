@@ -1,22 +1,152 @@
-// closure.js
-// 1)
-function generateUniqId() {
-    let arrOfId = new Set();
+// callApplyDecorators
 
-    return function() {
-        let newId;
+// Прозрачное кэширование
+// Упомянутый выше кеширующий декоратор не подходит для работы с методами объектов.
+function slow(x) {
+    alert(`Called with ${x}`);
+    return x;
+}
 
-        do {
-            newId = Math.floor(Math.random() * 1000)
-        } while (arrOfId.has(newId));
-        
-        arrOfId.add(newId);
+function cachingDecorator(func) {
+    let cache = new Map();
 
-        return newId;
+    return function(x) {
+        if (cache.has(x)) {
+            return cache.get(x);
+        }
+
+        let result = func(x);
+
+        cache.set(x, result);
+        return result;
     }
 }
 
-const newId = generateUniqId();
-console.log(newId());
-console.log(newId());
-console.log(newId());
+slow = cachingDecorator(slow);
+
+// alert(slow(1));
+// alert("Again: " + slow(1));
+
+// alert(slow(2));
+// alert("Again: " + slow(2));
+
+// Применение «func.call» для передачи контекста.
+// 1)
+function sayHi() {
+    alert(this.name);
+}
+
+let user = { name: "Nick" };
+let admin = { name: "Mick" };
+
+// sayHi.call(user);
+// sayHi.call(admin);
+
+// 2)
+function say(phrase) {
+    alert(this.name + ': ' + phrase);
+}
+
+// say.call(user, "Hello");
+
+let worker = {
+    someMethod() {
+        return 1;
+    },
+
+    slow(x) {
+        alert("Called with " + x);
+        return x * this.someMethod();
+    }
+}
+
+function cachingDecorator(func) {
+    let cache = new Map();
+
+    return function(x) {
+        if (cache.has(x)) {
+            return cache.get(x);
+        }
+
+        let result = func.call(this, x);
+        cache.set(x, result);
+        return result;
+    }
+}
+
+worker.slow = cachingDecorator(worker.slow);
+
+// alert(worker.slow(2));
+// alert(worker.slow(2));
+
+// Переходим к нескольким аргументам с «func.apply».
+const newWorker = {
+    slow(min, max) {
+        alert(`Called with ${min}, ${max}`);
+        return min + max;
+    }
+}
+
+function advancedCachingDecorator(func, hash) {
+    let cache = new Map();
+
+    return function() {
+        const key = hash(arguments);
+        
+        if (cache.has(key)) return cache.get(key);
+
+        let result = func.apply(this, arguments);
+
+        cache.set(key, result);
+
+        return result;
+    }
+}
+
+function hash(args) {
+    return args[0] + ',' + args[1];
+}
+
+newWorker.slow = advancedCachingDecorator(newWorker.slow, hash);
+
+// alert( newWorker.slow(3, 5) ); // работает
+// alert( "Again " + newWorker.slow(3, 5) ); // аналогично (из кеша)
+
+// Передача всех аргументов вместе с контекстом другой функции
+// называется «перенаправлением вызова» (call forwarding).
+let wrapper = function() {
+    return func.apply(this.arguments);
+}
+
+// Заимствование метода
+function borrowingMethod() {
+    alert( [].join.call(arguments) ); // *
+}
+
+// borrowingMethod(1,2,3,4,5);
+
+// 1)
+function work(a, b) {
+    alert( a + b ); // произвольная функция или метод
+}
+
+function spy(func) {
+
+    function wrapper(...args) {
+        wrapper.calls.push(args);
+        return func.apply(this, args);
+    }
+
+    wrapper.calls = [];
+
+    return wrapper;
+}
+
+work = spy(work);
+
+work(1, 2); // 3
+work(4, 5); // 9
+
+for (let args of work.calls) {
+    alert( 'call:' + args.join() ); // "call:1,2", "call:4,5"
+}
