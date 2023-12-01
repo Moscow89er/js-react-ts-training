@@ -165,7 +165,7 @@ function delay(func, miliseconds) {
 }
 
 // создаём обёртки
-let f1000 = delay(f, 1000);
+let f2000 = delay(f, 2000);
 let f1500 = delay(f, 1500);
 
 // f1000("test"); // показывает "test" после 1000 мс
@@ -183,20 +183,48 @@ function debounce(func, ms) {
     }
 }
 
-// let current = from;
-
-// const timerId = setTimeout(function repeat() {
-//     console.log(current);
-//     if (current === to) {
-//         clearTimeout(timerId);
-//         return;
-//     }
-//     current++;
-//     setTimeout(repeat, 1000);
-// }, 1000);
-
 const func = debounce(alert, 1000);
 
-setTimeout( () => func("a"), 200);
-setTimeout( () => func("b"), 200);
-setTimeout( () => func("c"), 500);
+// setTimeout( () => func("a"), 200);
+// setTimeout( () => func("b"), 200);
+// setTimeout( () => func("c"), 500);
+
+// 4)
+function f(a) {
+    console.log(a)
+}
+
+function throttle(func, ms) {
+    let isThrottled = false;
+    let lastThis, lastArguments;
+
+    function wrapper() {
+        if (isThrottled) {
+            // сохраняем последние аргументы для вызова после таймаута
+            lastArguments = arguments;
+            lastThis = this;
+            return;
+        }
+
+        func.apply(this, arguments); // немедленный вызов
+
+        isThrottled = true;
+
+        setTimeout(function() { 
+            isThrottled = false; // сброс флага после задержки 
+            if (lastArguments) {
+                wrapper.apply(lastThis, lastArguments); // вызов с последними аргументами
+                lastArguments = lastThis = null;
+            }
+        }, ms);
+    }
+
+    return wrapper;
+}
+
+// f1000 передаёт вызовы f максимум раз в 1000 мс
+let f1000 = throttle(f, 1000);
+
+f1000(1);
+f1000(2);
+f1000(3);
