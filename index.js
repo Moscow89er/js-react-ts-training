@@ -60,4 +60,32 @@ User.prototype = { constructor: User };
 const user = new User("Nick");
 const user2 = new user.constructor("Fred")
 
-console.log(user2);
+// console.log(user2);
+
+// 
+
+// 1)
+function f() {
+  alert("Hello!");
+}
+
+Function.prototype.defer = function(ms) {
+  setTimeout(this, ms)
+}
+
+// f.defer(1000);
+
+// 2)
+function f2(a, b) {
+  alert(a + b);
+}
+
+Function.prototype.defer2 = function(ms) {
+  let f = this;
+
+  return function(...args) {
+    setTimeout(() => f.apply(this, args), ms)
+  }
+}
+
+f2.defer2(1000)(1, 2);
