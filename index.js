@@ -1,142 +1,95 @@
-// prototypeInheritance.js
-
+// tasks from 6Seniors Docs
 // 1)
-const head = {
-  glasses: 1
-};
+const getNumbersByParity = (data, parity) => {
+  const oddNums = [];
+  const evenNums = [];
 
-const table = {
-  pen: 3,
-  __proto__: head
-};
-
-const bed = {
-  sheet: 1,
-  pillow: 2,
-  __proto__:  table
-};
-
-const pockets = {
-  money: 2000,
-  __proto__: bed
-};
-
-// alert( pockets.pen ); // 3
-// alert( bed.glasses ); // 1
-// alert( table.money ); // undefined
-
-// 2)
-let hamster = {
-    stomach: [],
-  
-    eat(food) {
-        this.stomach.push(food);
+  for (let i = 0; i < data.length; i++) {
+    if (data[i] % 2 === 0) {
+      evenNums.push(data[i]);
+    } else if (data[i] % 2 !== 0) {
+      oddNums.push(data[i]);
     }
+  }
+
+  if (parity === "even") return evenNums;
+
+  return oddNums;
 };
 
-let speedy = {
-    stomach: [],
-    __proto__: hamster
-};
+const data = [1, 2, 3, 4, 5, 6];
 
-let lazy = {
-    stomach: [],
-    __proto__: hamster
-};
+console.log(getNumbersByParity(data, 'even'));
+console.log(getNumbersByParity(data, 'odd'));
 
-// Этот хомяк нашёл еду
-speedy.eat("apple");
-// alert( speedy.stomach );
-// alert( lazy.stomach );
 
-// functionPrototype.js
+// propertyDescriptors.js
 // 1)
-function User(name) {
-    this.name = name;
-}
+const user = {};
 
-User.prototype = { constructor: User };
+Object.defineProperty(user, "name", {
+  value: "Nick",
+  writable: false
+})
 
-const user = new User("Nick");
-const user2 = new user.constructor("Fred")
+user.name = "Victor";
 
-// console.log(user2);
-
-// 
-
-// 1)
-function f() {
-  alert("Hello!");
-}
-
-Function.prototype.defer = function(ms) {
-  setTimeout(this, ms)
-}
-
-// f.defer(1000);
+console.log(user.name); // Nick
 
 // 2)
-function f2(a, b) {
-  alert(a + b);
+const dog = {};
+
+Object.defineProperties(dog, {
+  "name": {value: "Hito", writable: true, enumerable: true, configurable: true},
+  "age": {value: 2, writable: true, enumerable: true, configurable: true}
+})
+
+console.log(dog);
+
+dog.name = "Tyson";
+dog.age = 5;
+delete dog.age;
+
+console.log(dog);
+
+Object.seal(dog);
+dog.name = "Hito";
+delete dog.name;
+
+console.log(dog);
+
+// 3)
+const wallet = {};
+
+Object.defineProperties(wallet, {
+  "name": {value: "YvesSaintLaurent", enumerable: true},
+  "quantity": {value: 10000, enumerable: true},
+  "toString": {value() { return Object.keys(this).join(', ')}, enumerable: false}
+})
+
+for (let key in wallet) {
+  console.log(key);
 }
 
-Function.prototype.defer2 = function(ms) {
-  let f = this;
+alert(wallet);
 
-  return function(...args) {
-    setTimeout(() => f.apply(this, args), ms)
+// propertyAccessors.js
+// 1)
+const person = {
+  name: "Nick",
+  lastName: "Stone",
+
+  get fullName() {
+    return this.name + ' ' + this.lastName;
+  },
+
+  set fullName(value) {
+    [this.name, this.lastName] = value.split(" ");
   }
 }
 
-// f2.defer2(1000)(1, 2);
+console.log(person.fullName);
 
+person.fullName = "Иван Говнов";
 
-// prototypeMethods.js
-
-// клон obj c тем же прототипом (с поверхностным копированием свойств)
-// const clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptor(obj));
-
-// 1)
-// a)
-const dictionary = Object.create(null);
-
-Object.defineProperty(dictionary, "toString", {
-  value: function() {
-    const arrOfKeys = [];
-  
-    for (const key of Object.keys(dictionary)) {
-      arrOfKeys.push(key);
-    }
-    
-    return arrOfKeys.toString(',');
-  },
-  enumerable: false
-});
-
-dictionary.apple = "Apple";
-dictionary.__proto__ = "test";
-
-for(const key in dictionary) {
-  alert(key);
-}
-
-alert(dictionary);
-
-// b)
-const dictionary2 = Object.create(
-  null,
-  {toString: {
-    value() {
-      return Object.keys(this).join();
-    }
-  }}
-);
-
-dictionary2.apple = "Apple";
-dictionary2.__proto__ = "test";
-
-for(const key in dictionary2) {
-  alert(key);
-}
-
-alert(dictionary2);
+console.log(person.fullName);
