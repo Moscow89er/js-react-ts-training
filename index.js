@@ -88,4 +88,55 @@ Function.prototype.defer2 = function(ms) {
   }
 }
 
-f2.defer2(1000)(1, 2);
+// f2.defer2(1000)(1, 2);
+
+
+// prototypeMethods.js
+
+// клон obj c тем же прототипом (с поверхностным копированием свойств)
+// const clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptor(obj));
+
+// 1)
+// a)
+const dictionary = Object.create(null);
+
+Object.defineProperty(dictionary, "toString", {
+  value: function() {
+    const arrOfKeys = [];
+  
+    for (const key of Object.keys(dictionary)) {
+      arrOfKeys.push(key);
+    }
+    
+    return arrOfKeys.toString(',');
+  },
+  enumerable: false
+});
+
+dictionary.apple = "Apple";
+dictionary.__proto__ = "test";
+
+for(const key in dictionary) {
+  alert(key);
+}
+
+alert(dictionary);
+
+// b)
+const dictionary2 = Object.create(
+  null,
+  {toString: {
+    value() {
+      return Object.keys(this).join();
+    }
+  }}
+);
+
+dictionary2.apple = "Apple";
+dictionary2.__proto__ = "test";
+
+for(const key in dictionary2) {
+  alert(key);
+}
+
+alert(dictionary2);
