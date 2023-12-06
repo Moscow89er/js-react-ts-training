@@ -93,3 +93,51 @@ console.log(person.fullName);
 person.fullName = "Иван Говнов";
 
 console.log(person.fullName);
+
+// 2)
+const newUser = {
+  _age: 34,
+
+  get age() {
+    return this._age;
+  },
+
+  set age(value) {
+    if (typeof value === "number" && value > 0) {
+      this._age = value;
+    }
+  }
+}
+
+console.log(newUser.age);
+
+newUser.age = 25;
+
+console.log(newUser.age);
+
+// 3)
+const settings = {
+  _theme: "white",
+
+  get theme() {
+    console.log(this._theme);
+    return this._theme;
+  },
+
+  set theme(value) {
+    console.log(this._theme);
+    console.log(value);
+    if (typeof value === "string" && value.length > 0) {
+      this._theme = value;
+      console.log(this._theme);
+    } else {
+      throw new Error("Введите, пожалуйста, текст!");
+    }
+  }
+}
+
+console.log(settings.theme);
+
+settings.theme = "dark";
+
+settings.theme = 55;
