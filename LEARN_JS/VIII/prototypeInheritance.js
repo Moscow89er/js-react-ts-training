@@ -50,7 +50,7 @@ const head = {
   // alert( lazy.stomach );
   
   // functionPrototype.js
-  // 1)
+  // 3)
   function User(name) {
       this.name = name;
   }
@@ -64,7 +64,7 @@ const head = {
   
   // 
   
-  // 1)
+  // 4)
   function f() {
     alert("Hello!");
   }
@@ -75,7 +75,7 @@ const head = {
   
   // f.defer(1000);
   
-  // 2)
+  // 5)
   function f2(a, b) {
     alert(a + b);
   }
@@ -96,7 +96,7 @@ const head = {
   // клон obj c тем же прототипом (с поверхностным копированием свойств)
   // const clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptor(obj));
   
-  // 1)
+  // 6)
   // a)
   const dictionary = Object.create(null);
   
@@ -140,3 +140,111 @@ const head = {
   }
   
   alert(dictionary2);
+
+  // prototypeInheritance.js
+// 7)
+const animal = {
+  isAlive: true
+};
+
+const dog = {
+  __proto__: animal,
+
+  bark() {
+      console.log("Woof!");
+  }
+};
+
+console.log(dog.isAlive);
+dog.bark();
+
+// 8)
+const animal2 = {
+  eats: true
+};
+
+const cat = {
+  jumps: true
+};
+
+Object.setPrototypeOf(cat, animal2);
+
+console.log(cat.eats);
+
+// F.prototpe.js
+// 9)
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.speak = function() {
+  console.log(`My name is ${this.name}, and i'm the real Slim Shaddy!`)
+}
+
+const rex = new Animal("Rex");
+
+rex.speak();
+
+// 10)
+function Bird(name) {
+  this.name = name;
+}
+
+Bird.prototype.speak = function() {
+  console.log(`Hey, hey, hey! Here comes the ${this.name}!`);
+}
+
+const parrot = new Bird("Polly");
+
+Bird.prototype = { key: "smth" }; // Переопределяем свойство prototype, теперь свойства constructor в нем нет (*)
+
+const owl = new Bird("Jack");
+
+// parrot.constructor возвращает Bird.prototype - ответ на первый вопрос
+
+console.log(parrot);
+parrot.speak(); // parrot уже был инициализирован, когда мы переопределили свойство constructor, по этой причине для него ничего не поменялось
+console.log(owl);
+// owl.speak(); // owl не имеет доступа к F.prototype из за отсутствия свойсва constructor, по этой прчине возникает ошибка TypeError, owl.speack is not a function
+
+// 11)
+function Vehicle(type) {
+  this.type = type;
+}
+
+Vehicle.prototype = {
+  constructor: Vehicle,
+
+  move() {
+      console.log(this.type + " is moving...")
+  }    
+}
+
+const car = new Vehicle("Car");
+
+car.move();
+
+// nativePrototypes.js
+// 12)
+const numbers = [1, 2, 3, 4, 5];
+
+const squaredNums = numbers.map(num => num * num);
+
+console.log(squaredNums);
+
+// 13)
+const exampleString = "Hello World!";
+
+String.prototype.reverse = function() {
+  const newStr = [];
+  let index = 0;
+
+  for (let i = this.length - 1; i >= 0; i--) {
+      newStr[index] = this[i];
+      index++;
+  }
+
+  return newStr.join("");
+}
+
+console.log(exampleString.reverse());
