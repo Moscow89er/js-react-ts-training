@@ -204,3 +204,224 @@ const fibonacci = memoizedFibonacci();
 console.log(fibonacci(6));
 console.log(fibonacci(7));
 console.log(fibonacci(1000));
+
+// 6)
+function memoFib(n, cache = {}) {
+  if (n === 0) return 0;
+  if (n === 1) return 1;
+
+  if (cache[n]) {
+      return cache[n];
+  }
+
+  cache[n] = memoFib(n - 1, cache) + memoFib(n - 2, cache);
+
+  return cache[n];
+}
+
+console.log(memoFib(7));
+
+// 7)
+function memoFactorial(n, cache = {}) {
+  if (n in cache) return cache[n];
+
+  if (n === 1) return 1;
+
+  cache[n] = n * memoFactorial(n - 1, cache);
+
+  return cache[n];
+}
+
+console.log(memoFactorial(5));
+
+// 8)
+function factorial(n) {
+  if (n === 1) return 1;
+
+  return n * factorial(n - 1);
+}
+
+console.log(factorial(5));
+
+// 9)
+function tailReqursionFactorial(n, accumulator = 1) {
+  if (n === 1) return accumulator;
+
+  return tailReqursionFactorial(n - 1, n * accumulator);
+}
+
+console.log(tailReqursionFactorial(5));
+
+// 10)
+// a)
+function sumOfTheRangeOfNum (n, cache = {}) {
+  if (n in cache) return cache[n];
+
+  if (n === 1) return 1;
+
+  cache[n] = n + sumOfTheRangeOfNum(n - 1, cache);
+
+  return cache[n];
+}
+
+console.log(sumOfTheRangeOfNum(5));
+
+// b)
+function tailSumOfTheRangeOfNum(n, accumulator = 0) {
+  if (n === 0) return accumulator;
+
+  return tailSumOfTheRangeOfNum(n - 1, n + accumulator);
+}
+
+console.log(tailSumOfTheRangeOfNum(5));
+
+
+// 11)
+const weekDays = {
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
+  7: "Sunday",
+
+  [Symbol.iterator]() {
+      let index = 1;
+
+      return {
+          next() {
+              if (index <= 7) {
+                  const current = weekDays[index++];
+
+                  return {
+                      done: false,
+                      value: current
+                  }
+              } else {
+                  return {
+                      done: true
+                  }
+              }
+          }
+      }
+  }
+}
+
+// for (const day of weekDays) {
+//     console.log(day);
+// }
+
+
+// 12)
+// a)
+const colorSpectrum = { 
+  red: "#FF0000",
+  green: "#00FF00", 
+  blue: "#0000FF",
+
+  [Symbol.iterator]() {
+      const keys = getKeys(colorSpectrum);
+
+      return {
+          next() {
+              const current = colorSpectrum[keys[0]];
+
+              if (keys.length !== 0) {
+                  keys.shift();
+
+                  return {
+                      done: false,
+                      value: current
+                  }
+              } else {
+                  return {
+                      done: true
+                  }
+              }
+          }
+      }
+  }
+}
+
+function getKeys(obj) {
+  const arrOfKeys = [];
+
+  for (let key in obj) {
+      arrOfKeys.push(key);
+  }
+
+  return arrOfKeys;
+}
+
+for (const color of colorSpectrum) {
+  console.log(color);
+}
+
+// b) оптимальное решение
+const colorSpectrum2 = {
+  red: "#FF0000",
+  green: "#00FF00", 
+  blue: "#0000FF",
+
+  [Symbol.iterator]() {
+      const keys = Object.keys(colorSpectrum2).filter(key => key !== Symbol.iterator.toString());
+      let index = 0;
+
+      return {
+          next() {
+              if (index < keys.length) {
+                  const key = keys[index++];
+
+                  return {
+                      done: false,
+                      value: colorSpectrum2[key]
+                  }
+              } else {
+                  return {
+                      done: true
+                  }
+              }
+          }
+      }
+  }
+}
+
+for (const color of colorSpectrum2) {
+  console.log(color);
+}
+
+// 13)
+const book = {
+  page1: "Content of page 1",
+  page2: "Content of page 2",
+
+  [Symbol.iterator]() {
+      const keys = Object.keys(this).filter(key => key !== Symbol.iterator.toString());
+      let index = 0;
+      const self = this;
+
+      return {
+          next() {
+              const key = keys[index];
+
+              if (index < keys.length) {
+                  index++;
+
+                  return {
+                      done: false,
+                      value: self[key]
+                  }
+              } else {
+                  return {
+                      done: true
+                  }
+              }
+          }
+      }
+  }
+}
+
+for (const pageContent of book) {
+  console.log(pageContent);
+}

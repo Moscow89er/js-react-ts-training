@@ -1,115 +1,69 @@
-// ОС от Макса 06.12
 // 1)
-const weekDays = {
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
-    7: "Sunday",
+function memoFib(n, cache = {}) {
+    if (n === 0) return 0;
+    if (n === 1) return 1;
 
-    [Symbol.iterator]() {
-        let index = 1;
-
-        return {
-            next() {
-                if (index <= 7) {
-                    const current = weekDays[index++];
-
-                    return {
-                        done: false,
-                        value: current
-                    }
-                } else {
-                    return {
-                        done: true
-                    }
-                }
-            }
-        }
+    if (cache[n]) {
+        return cache[n];
     }
+
+    cache[n] = memoFib(n - 1, cache) + memoFib(n - 2, cache);
+
+    return cache[n];
 }
 
-// for (const day of weekDays) {
-//     console.log(day);
-// }
-
+console.log(memoFib(7));
 
 // 2)
+function memoFactorial(n, cache = {}) {
+    if (n in cache) return cache[n];
+
+    if (n === 1) return 1;
+
+    cache[n] = n * memoFactorial(n - 1, cache);
+
+    return cache[n];
+}
+
+console.log(memoFactorial(5));
+
+// 3)
+function factorial(n) {
+    if (n === 1) return 1;
+
+    return n * factorial(n - 1);
+}
+
+console.log(factorial(5));
+
+// 4)
+function tailReqursionFactorial(n, accumulator = 1) {
+    if (n === 1) return accumulator;
+
+    return tailReqursionFactorial(n - 1, n * accumulator);
+}
+
+console.log(tailReqursionFactorial(5));
+
+// 5)
 // a)
-const colorSpectrum = { 
-    red: "#FF0000",
-    green: "#00FF00", 
-    blue: "#0000FF",
+function sumOfTheRangeOfNum (n, cache = {}) {
+    if (n in cache) return cache[n];
 
-    [Symbol.iterator]() {
-        const keys = getKeys(colorSpectrum);
+    if (n === 1) return 1;
 
-        return {
-            next() {
-                const current = colorSpectrum[keys[0]];
+    cache[n] = n + sumOfTheRangeOfNum(n - 1, cache);
 
-                if (keys.length !== 0) {
-                    keys.shift();
-
-                    return {
-                        done: false,
-                        value: current
-                    }
-                } else {
-                    return {
-                        done: true
-                    }
-                }
-            }
-        }
-    }
+    return cache[n];
 }
 
-function getKeys(obj) {
-    const arrOfKeys = [];
+console.log(sumOfTheRangeOfNum(5));
 
-    for (let key in obj) {
-        arrOfKeys.push(key);
-    }
+// b)
+function tailSumOfTheRangeOfNum(n, accumulator = 0) {
+    if (n === 0) return accumulator;
 
-    return arrOfKeys;
+    return tailSumOfTheRangeOfNum(n - 1, n + accumulator);
 }
 
-for (const color of colorSpectrum) {
-    console.log(color);
-}
-
-// b) оптимальное решение
-const colorSpectrum2 = {
-    red: "#FF0000",
-    green: "#00FF00", 
-    blue: "#0000FF",
-
-    [Symbol.iterator]() {
-        const keys = Object.keys(colorSpectrum2).filter(key => key !== Symbol.iterator.toString());
-        let index = 0;
-
-        return {
-            next() {
-                if (index < keys.length) {
-                    const key = keys[index++];
-
-                    return {
-                        done: false,
-                        value: colorSpectrum2[key]
-                    }
-                } else {
-                    return {
-                        done: true
-                    }
-                }
-            }
-        }
-    }
-}
-
-for (const color of colorSpectrum2) {
-    console.log(color);
-}
+console.log(tailSumOfTheRangeOfNum(5));
