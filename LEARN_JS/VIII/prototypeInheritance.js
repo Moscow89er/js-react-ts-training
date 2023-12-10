@@ -248,3 +248,79 @@ String.prototype.reverse = function() {
 }
 
 console.log(exampleString.reverse());
+
+// Копирование свойст через цикл for ... in,
+// переопределение дескрипторов и копирование через Object.assign
+const user3 = {
+  name: "Nick",
+  age: 33
+};
+
+const admin = {
+  admin: true
+};
+
+for (let key in user3) {
+  admin[key] = user[key];
+}
+
+console.log(admin);
+
+Object.defineProperty(admin, "password", {
+  value: 12345,
+  writable: true,
+  enumerable: false,
+  configurable: false
+});
+
+const adminClone = Object.assign(Object.create(
+  Object.getPrototypeOf(admin)
+), admin);
+
+console.log(adminClone.password); // undefined, но так и нужно
+
+// prototypeInheritance.js
+// 14)
+const animal3 = {
+  speak() {
+    console.log(this.name + " makes a sound");
+  }
+};
+
+const cat2 = Object.create(animal3, {
+  name: {
+      value: "Boris Johnson"
+  }
+});
+
+console.log(cat2);
+
+cat2.speak();
+
+// 15)
+function Car(model) {
+  this.model = model;
+}
+
+Car.prototype.drive = function() {
+  console.log(this.model + " is moving...");
+};
+
+const myCar2 = new Car("Tesla");
+
+myCar2.drive(); // Tesla is moving...
+
+// 16)
+const zoo = {
+  speak() {
+    console.log(this.name + ": -'Hold my beer'");
+  }
+};
+
+const hippo = {
+  name: "Whiskers"
+};
+
+Object.setPrototypeOf(hippo, zoo);
+
+hippo.speak();
