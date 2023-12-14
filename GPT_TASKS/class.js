@@ -374,3 +374,32 @@ const product = new Product("Phone", "Price is 300$");
 
 user2.log();
 product.log();
+
+// 20)
+const SerializationMixin = {
+    serialize() {
+        return JSON.stringify(this);
+    }
+}
+
+class User {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    static deserialize(str) {
+        const obj = JSON.parse(str);
+        return new User(obj.name, obj.age);
+    }
+};
+
+Object.assign(User.prototype, SerializationMixin)
+
+user = new User("Nick", 34);
+
+const userData = user.serialize();
+// console.log(userData);
+
+const newUser = User.deserialize(userData);
+// console.log(newUser);
