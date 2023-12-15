@@ -85,3 +85,47 @@ const reversed = new ReversedString("hello");
 for (let char of reversed) {
   console.log(char); // Выводит 'o', 'l', 'l', 'e', 'h'
 }
+
+// 3)
+const admin = {
+    name: "Nick",
+    age: 34,
+    isAdmin: true,
+    userName: "admin",
+    password: "12!_12",
+
+    [Symbol.iterator]() {
+        const keys = Object.keys(admin);
+        let current = 0;        
+
+        return {
+            next: () => {
+                const key = keys[current];
+                const value = this[key];
+                current++;
+
+                if (current <= keys.length) {
+                    return {
+                        done: false,
+                        value: { key, value }
+                    }
+                } else {
+                    return { done: true }
+                }
+            }
+        }
+    }
+}
+
+for (let { key, value } of admin) {
+    console.log(`${key}: ${value}`);
+}
+
+const [name, age, ...otherArgs] = admin;
+
+console.log(otherArgs);
+
+// удаление из объекта свойств используя '...spread-оператор'
+const {password, ...others} = admin;
+
+console.log(JSON.stringify(others));
