@@ -157,7 +157,7 @@ const [first, second] = {
                 if (current <= keys.length) {
                     return {
                         done: false,
-                        value: [key, value]
+                        value: { key, value }
                     }
                 } else {
                     return { done: true }
