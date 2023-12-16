@@ -134,9 +134,12 @@ console.log(JSON.stringify(others));
 // const {} = [];
 // const [] = {};
 
-const { one, two } = [1, 2];
-console.log( {one, two} ); // {one: undefined, two: undefined}
+// 1)
+const { 0: one, 1: two } = [1, 2];
+console.log( {one, two} ); // {one: 1, two: 2}
 
+
+// 2)
 const [first, second] = { 
     0: "one",
     1: "two",
@@ -146,7 +149,7 @@ const [first, second] = {
         let current = 0;
         
         return {
-            next() {
+            next: () => {
                 const key = keys[current];
                 const value = this[key];
                 current++;
@@ -162,6 +165,6 @@ const [first, second] = {
             }
         }
     }
- };
+};
 
-console.log(first, second); // ['0', undefined] ['1', undefined]
+console.log(first, second); // ['0', 'one'] ['1', 'two']
