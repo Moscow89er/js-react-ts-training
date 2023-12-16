@@ -129,3 +129,39 @@ console.log(otherArgs);
 const {password, ...others} = admin;
 
 console.log(JSON.stringify(others));
+
+// решение задачи по деструктуризации
+// const {} = [];
+// const [] = {};
+
+const { one, two } = [1, 2];
+console.log( {one, two} ); // {one: undefined, two: undefined}
+
+const [first, second] = { 
+    0: "one",
+    1: "two",
+
+    [Symbol.iterator] () {
+        const keys = Object.keys(this);
+        let current = 0;
+        
+        return {
+            next() {
+                const key = keys[current];
+                const value = this[key];
+                current++;
+
+                if (current <= keys.length) {
+                    return {
+                        done: false,
+                        value: [key, value]
+                    }
+                } else {
+                    return { done: true }
+                }
+            }
+        }
+    }
+ };
+
+console.log(first, second); // ['0', undefined] ['1', undefined]
