@@ -54,3 +54,55 @@ function processFile(outerFile) {
 
 // processFile(textFile);
 // processFile(numberFile);
+
+// 4)
+class FormValidationError extends Error {
+    constructor(message, field) {
+        super(message);
+        this.field = field;
+        this.name = "FormValidationError";
+    }
+}
+
+function validateForm(data) {
+    if (!data.email) {
+        throw new FormValidationError("Заполните это поле", "email");
+    }
+}
+
+try {
+    validateForm({email: ''});
+} catch(err) {
+    if (err instanceof FormValidationError) {
+        console.error(`Ошибка в поле: '${err.field}': ${err.message}`);
+        console.log(err.name);
+    }
+}
+
+// 5)
+class NetworkError extends Error {
+    constructor(message, statusCode, url) {
+        super(message);
+        this.statusCode = statusCode;
+        this.url = url;
+    }
+}
+
+function fetchResource(url) {
+    const statusCode = 404;
+
+    if (statusCode >= 400) {
+        throw new NetworkError("Ресурс не найден", statusCode, url);
+    }
+}
+
+try {
+    fetchResource("https://example.com/data");
+} catch(err) {
+    if (err instanceof NetworkError) {
+        console.error(
+            `Ошибка при запросе на адресс '${err.url}': ${err.message} (Статус: ${err.statusCode})`
+        );
+        console.log(err.name);
+    }
+}
