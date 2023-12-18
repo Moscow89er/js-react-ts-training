@@ -403,3 +403,32 @@ const userData = user.serialize();
 
 const newUser = User.deserialize(userData);
 // console.log(newUser);
+
+// 21) [Symbol.species]
+class MyArray extends Array {
+    static get [Symbol.species]() {
+        return Array;
+    }
+}
+
+const array = new MyArray(1, 2, 3, 4, 5);
+
+const result = array.filter((val) => val >= 5);
+
+// console.log(result);
+// console.log(result instanceof MyArray);
+
+// 22)
+class Buffer extends Array {
+    static get [Symbol.species]() {
+        return Array;
+    }
+}
+
+const buff = new Buffer(5, 10, 15);
+
+const secondResult = buff.map(val => val + 10);
+
+// console.log(secondResult);
+// console.log(buff instanceof Buffer);
+// console.log(secondResult instanceof Buffer);
