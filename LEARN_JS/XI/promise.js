@@ -188,3 +188,112 @@ new Promise((resolve, reject) => {
     console.log(`Неизвестная ошибка: ${error}`);
     // ничего не возвращаем => выполнение продолжается в нормальном режиме
 });
+
+// 8) Promise.all
+Promise.all([
+    new Promise(resolve => setTimeout(() => resolve(1), 3000)),
+    new Promise(resolve => setTimeout(() => resolve(2), 2000)),
+    new Promise(resolve => setTimeout(() => resolve(3), 1000))
+]).then(console.log);
+
+// 9)
+const urls = [
+    'https://api.github.com/users/iliakan',
+    'https://api.github.com/users/remy',
+    'https://api.github.com/users/jeresig'
+];
+
+const requests = urls.map(url => fetch(url));
+
+Promise.all(requests)
+    .then(responses => responses.forEach(
+        response => alert(`${response.url}: ${response.status}`)
+    ));
+
+// 10)
+const names = ['iliakan', 'remy', 'jeresig'];
+
+const requests2 = names.map(name => fetch(`https://api.github.com/users/${name}`));
+
+Promise.all(requests2)
+    .then(responses => {
+        // все промисы успешно завершены
+        for (let response of responses) {
+            alert(`${response.url}: ${response.status}`); // покажет 200 для каждой ссылки
+        }
+
+        return responses;
+    })
+    // преобразовать массив ответов response в response.json(),
+    // чтобы прочитать содержимое каждого
+    .then(responses => Promise.all(responses.map(r => r.json())))
+    // все JSON-ответы обработаны, users - массив с результатами
+    .then(users => users.forEach(user => console.log(user.name)));
+
+// 11)
+Promise.all([
+    new Promise((resolve, reject) => setTimeout(() => resolve(1), 1000)),
+    new Promise((resolve, reject) => setTimeout(() => reject(new Error("Ошибка!")), 2000)),
+    new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000))
+]).catch(console.log);
+
+Promise.all([
+    new Promise((resolve, reject) => {
+        setTimeout(() => resolve(1), 1000)
+    }),
+    2,
+    3
+]).then(console.log);
+
+// 12) Promise.allSettled
+Promise.allSettled(urls.map(url => fetch(url)))
+    .then(results => {
+        results.forEach((result, num) => {
+            if (result.status === "fulfilled") {
+                console.log(`${urls[num]}: ${result.value.status}`);
+            }
+            if (result.status === "rejected") {
+                console.log(`${urls[num]}: ${result.reason}`);
+            }
+        });
+    });
+
+// 13) Promise.race
+Promise.race([
+    new Promise((resolve, reject) => setTimeout(() => resolve(1), 1000)), // выполнится только первый, остальные игнорируются
+    new Promise((resolve, reject) => setTimeout(() => reject(new Error("Ошибка!")), 2000)),
+    new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000))
+]).then(console.log);
+
+// 14) Promise.any
+Promise.any([
+    new Promise((resolve, reject) => setTimeout(() => reject(new Error("Ошибка!")), 1000)),
+    new Promise((resolve, reject) => setTimeout(() => resolve(1), 2000)), // выполнится только первый успешно выполненный
+    new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000))
+]).then(alert);
+
+// 15)  
+Promise.any([
+    new Promise((resolve, reject) => setTimeout(() => reject(new Error("Ошибка!")), 1000)),
+    new Promise((resolve, reject) => setTimeout(() => reject(new Error("Ещё одна ошибка!")), 2000))
+]).catch(error => {
+    console.log(error.constructor.name); // AggregateError
+    console.log(error.errors[0]); // Error: Ошибка!
+    console.log(error.errors[1]); // Error: Ещё одна ошибка!
+});
+
+// 16) Promise.resolve
+const cache = new Map();
+
+function loadCached(url) {
+    if (cache.has(url)) {
+        return Promise.resolve(cache.get(url));
+    }
+
+    return fetch(url)
+        .then(response => response.text())
+        .then(text => {
+            cache.set(url, text);
+            return text;
+        });
+}
