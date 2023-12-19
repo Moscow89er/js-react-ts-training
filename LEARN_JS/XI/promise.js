@@ -297,3 +297,106 @@ function loadCached(url) {
             return text;
         });
 }
+
+// 17) Промисификация
+const loadScriptPromise = function(src) {
+    return new Promise((resolve, reject) => {
+        loadScript(src, (err, script) => {
+            if (err) reject(err)
+            else resolve(script);
+        });
+    })
+}
+
+// 18)
+function promisify(func, manyArgs = false) {
+    return function(...args) { // возвращает функцию обертку
+        return new Promise((resolve, reject) => {
+            function callback(err, ...results) { // наш специальный колбэк для func
+                if (err) {
+                    reject(err);
+                } else {
+                    // делаем resolve для всех results колбэка, если задано manyArgs
+                    resolve(manyArgs ? results : results[0]);
+                }
+            }
+
+            args.push(callback); // добавляем колбэк в конец аргументов func
+
+            func.call(this, ...args); // вызываем оригинальную функцию
+        });
+    };
+};
+
+// const loadScriptPromise = promisify(loadScript, true);
+
+// 19) async/await
+async function f() {
+    const promise = new Promise((resolve, reject) => {
+        setTimeout(() => resolve("Done!"), 1000)
+    });
+
+    const result = await promise; // будет ждать пока промис не выполнится
+
+    console.log(result);
+}
+
+// f();
+
+// 20)
+async function showAvatarAsync() {
+    // запрашиваем JSON с данными пользователя
+    const response = await fetch('/article/promise-chaining/user.json');
+    const user = await response.json();
+
+    // запрашиваем информацию об этом пользователе из github
+    const githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+    const githubUser = await githubResponse.json();
+
+    // отображаем аватар пользователя
+    const img = document.createElement('img');
+    img.src = githubUser.avatar_url;
+    img.className = "promise-avatar-example";
+    document.body.append(img);
+
+    // ждём 3 секунды и затем скрываем аватар
+    await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+
+    img.remove();
+
+    return githubUser;
+}
+
+// showAvatarAsync();
+
+// 21)
+async function func() {
+    const result = await new Thenable(1);
+    console.log(result);
+}
+
+// func();
+
+// 22)
+class Waiter {
+    async wait() {
+        return await Promise.resolve(1);
+    }
+}
+
+new Waiter()
+    .wait()
+    .then(alert);
+
+// 23)
+async function fu() {
+    try {
+        const response = await fetch('/no-user-here');
+        const user = await response.json();
+    } catch(err) {
+        // перехватит любую ошибку в блоке try: и в fetch, и в response.json
+        console.log(err);
+    }
+}
+
+// fu();
