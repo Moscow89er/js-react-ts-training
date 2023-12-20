@@ -146,3 +146,76 @@ function getSpecificErrors(num, str) {
   let emptyFile;
   
   garantlyClosedFiles(emptyFile);
+
+  // 8) 
+class ApplicationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "ApplicationError";
+    }
+}
+
+class DatabaseError extends ApplicationError {
+    constructor(message) {
+        super(message);
+        this.name = "DatabaseError";
+    }
+}
+
+class HttpError extends ApplicationError {
+    constructor(message) {
+        super(message);
+        this.name = "HttpError";
+    }
+}
+
+const str1 = "Приложение";
+const str2 = "Сервер";
+const str3 = "URL";
+
+function getError(str) {
+    try {
+        if (str === "Приложение") throw new ApplicationError("Ошибка приложения");
+        if (str === "Сервер") throw new DatabaseError("Ошибка сервера");
+        if (str === "URL") throw new HttpError("Ошибка ссылки");
+    } catch(err) {
+        console.log(err.name);
+        console.log(err instanceof ApplicationError);
+    }
+}
+
+// getError(str1);
+// getError(str2);
+// getError(str3);
+
+// 8)
+class WrappingError extends ApplicationError {
+    constructor(message, innerException) {
+        super(message);
+        this.name = "WrappingError";
+        this.innerException = innerException;
+    }
+}  
+
+function parseData(str) {
+    try {
+        const json = JSON.parse(str);
+
+        if (!json.name) throw new ApplicationError("Не получено имя");
+
+        return json;
+    } catch(err) {
+        if (err.name === "ApplicationError") console.log(err.name, err.message);
+        throw new WrappingError("Ошибка при вызове функции parseData", err);
+    }
+}
+
+try {
+    parseData('{"age": "14"}')
+} catch(originalError) {
+    console.log(originalError);
+}
+
+const data = '{"name": "Igor"}';
+
+parseData(data);
