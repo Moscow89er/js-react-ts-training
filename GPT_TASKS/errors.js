@@ -106,3 +106,43 @@ try {
         console.log(err.name);
     }
 }
+
+// 6)
+function getSpecificErrors(num, str) {
+    try {
+      if (typeof num !== 'number') throw new TypeError("Not a number")
+      if (typeof str !== 'string') throw new Error("Second argument must be a string");
+    } catch (err) {
+      if (err instanceof TypeError) console.log(err.message);
+      if (err instanceof Error && err.message === "Second argument must be a string") {
+          console.log("Second argument must be a string");
+      }
+    } finally {
+      console.log("Executing of function is done")
+    }
+  }
+  
+  getSpecificErrors(42, "test");
+  getSpecificErrors("42", 42);
+  
+  // 7)
+  function garantlyClosedFiles(file) {
+    try {
+      file = "File is open";
+      console.log(file);
+  
+      if (Math.random() * 100 >= 50) {
+        throw new Error("Error!");
+      }
+  
+    } catch(err) {
+      console.log(`${err.stack}`);
+    } finally {
+      file = "File is closed";
+      console.log(file);
+    }
+  }
+  
+  let emptyFile;
+  
+  garantlyClosedFiles(emptyFile);
