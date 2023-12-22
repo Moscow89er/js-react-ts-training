@@ -542,23 +542,23 @@
 
 
 // Метод map под капотом
-// const map = function(arr, callback) {
-//     const resultedArr = [];
+const map = function(arr, callback) {
+    const resultedArr = [];
 
-//     for (let i = 0; i < arr.length; i++) {
-//         resultedArr[resultedArr.length++] = callback(arr[i], i, arr);
-//     }
+    for (let i = 0; i < arr.length; i++) {
+        resultedArr[resultedArr.length++] = callback(arr[i], i, arr);
+    }
 
-//     return resultedArr;
-// }
+    return resultedArr;
+}
 
-// const arr = [1,2,3,4,5];
+const arr = [1,2,3,4,5];
 
-// sumFunk = (a) => {
-//     return a + 2;
-// }
+sumFunk = (a) => {
+    return a + 2;
+}
 
-// console.log(map(arr, sumFunk));
+console.log(map(arr, sumFunk));
 
 
 // Метод filter под капотом

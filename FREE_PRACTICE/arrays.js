@@ -1,6 +1,6 @@
 const cars = ['Honda', 'Kia', 'Toyota', 'BMW', 'Audi', 'VW', 'Hummer'];
 const numbers = [1,1,1,2,3,4,2,2,3,5,7,8,9,7,6,5,4,4,3,2,2,3,5,6,7];
-let nums = [1,4,65,43,23,2,55,32,78,1,5,3]
+const nums = [1,4,65,43,23,2,55,32,78,1,5,3]
 const arr = [false, 'red', 0, 2, "", null, true, NaN, undefined];
 
 // 1) Суммируем все значения в массиве
@@ -95,5 +95,12 @@ const arr = [false, 'red', 0, 2, "", null, true, NaN, undefined];
 
 
 // 12) Как найти случайное число из массива
+function randomizeNums(arr) {
+    const result = arr[Math.floor(Math.random() * (nums.length))];
+    return result;
+}
+
+console.log(randomizeNums(nums));
+
 const rand_num = nums[(Math.floor(Math.random() * (nums.length)))];
 console.log(rand_num);

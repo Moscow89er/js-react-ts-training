@@ -74,28 +74,28 @@
 
 // let headOfBand;
 
-// function createDeepCopy(obj) {
-//     if (typeof obj !== 'object' || obj === null) {
-//         return obj
-//     }
+function createDeepCopy(obj) {
+    if (typeof obj !== 'object' || obj === null) {
+        return obj
+    }
 
-//     let copy;
+    let copy;
 
-//     if (Array.isArray(obj)) {
-//         copy = obj.map((item) => {
-//             return createDeepCopy(item)
-//         })
-//     } else {
-//         copy = {}
-//         for (let key in obj) {
-//             if (obj.hasOwnProperty(key)) {
-//                 copy[key] = createDeepCopy(obj[key])
-//             }
-//         }
-//     }
+    if (Array.isArray(obj)) {
+        copy = obj.map((item) => {
+            return createDeepCopy(item)
+        })
+    } else {
+        copy = {}
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                copy[key] = createDeepCopy(obj[key])
+            }
+        }
+    }
 
-//     return copy;
-// }
+    return copy;
+}
 
 // headOfBand = createDeepCopy(sharapov)
 
