@@ -73,3 +73,44 @@ fetchDataWithRetry('https://example.com', 3, (err, data) => {
         console.log(data);
     }
 });
+
+
+// 3) Асинхронный фильтр массива
+function asyncFilter(arr, asyncCallback, finalCallback) {
+    const resultedArr = [];
+    let count = 0;
+
+    // Проверяем не пуст ли массив
+    if (arr.length === 0) {
+        finalCallback(resultedArr);
+        return;
+    }
+
+    // Функция для обработки каждого элемента
+    arr.forEach(item => {
+        asyncCallback(item, (result) => {
+            // Если результат истенен, добавляем элемент в результатирующий массив
+            if (result) {
+                resultedArr.push(item);
+            }
+
+            // Увеличиваем счетчик обработки элементов
+            count++;
+
+            if (count === arr.length) {
+                finalCallback(resultedArr);
+            }
+        })
+    })
+
+}
+
+function isEvenNumber(number, callback) {
+    setTimeout(() => {
+        callback(number % 2 === 0);
+    }, 100);
+}
+
+asyncFilter([1, 2, 3, 4, 5, 6], isEvenNumber, (filteredArray) => {
+    console.log(filteredArray); // Должно выводить [2, 4, 6]
+});
