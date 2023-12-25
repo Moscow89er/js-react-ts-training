@@ -193,3 +193,17 @@ function fetchWithTimer(url, timeout) {
 fetchWithTimeout('https://api.example.com/data', 5000) // 5000 миллисекунд таймаут
     .then(data => console.log(data))
     .catch(error => console.error('Ошибка:', error));
+
+// 8)
+function executeAll(promises) {
+    return Promise.allSettled(promises.map(promise => {
+        return promise
+            .then(data => {
+                return data;
+            })
+            .catch(err => {
+                console.error('Возникла ошибка: ', err);
+                return "Возникла ошибка при получении данных";
+            })
+    }))
+}
