@@ -207,3 +207,17 @@ function executeAll(promises) {
             })
     }))
 }
+
+// 9)
+function delay(ms) {
+    const seconds = ms / 1000;
+
+    return new Promise(resolve => {
+        setTimeout(() => {
+        console.log(`Задержка составила: ${seconds} сек.`);
+        resolve();
+        }, ms);
+    });
+}
+
+delay(2000).then(() => console.log("Задержка завершена"));
