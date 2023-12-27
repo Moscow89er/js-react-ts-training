@@ -221,3 +221,54 @@ function delay(ms) {
 }
 
 delay(2000).then(() => console.log("Задержка завершена"));
+
+// 10)
+function racePromises(firstPromice, secondPromise) {
+    return Promise.race([firstPromice, secondPromise]);
+}
+
+const one = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("One"), 1000);
+    // setTimeout(() => reject(new Error("Ошибка в промисе One")), 1000);
+})
+
+
+const two = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("Two"), 500);
+    // setTimeout(() => reject(new Error("Ошибка в промисе Two")), 500);
+})
+
+racePromises(one, two)
+    .then((value) => console.log(value))
+    .catch((err) => console.error(err));
+
+// 11)
+const urls3 = ["https://www.error.site.net/", "https://www.error.site2.net/", "https://www.error.site3.net/"];
+
+function fetchMultipleUrls(urls) {
+    return Promise.allSettled(urls.map(url => {
+        return fetch(url)
+            .then(response => {
+                if (response.ok) {
+                    return response.status;
+                } else {
+                    throw new Error(`Ошибка HTTP: статус ${response.status}`);
+                }
+            })
+            .catch(err => {
+                console.error(`Ошибка при запросе к ${url}:`, err);
+                return err; // Возвращаем ошибку для обработки в allSettled
+            })
+    }))
+}
+
+fetchMultipleUrls(urls3)
+    .then(results => {
+        results.forEach((result, index) => {
+            if (result.status === 'fulfilled') {
+                console.log(`URL ${urls[index]}: успешно с статусом ${result.value}`);
+            } else {
+                console.log(`URL ${urls[index]}: не удалось загрузить, ошибка ${result.reason}`);
+            }
+        })
+    })
