@@ -272,3 +272,63 @@ fetchMultipleUrls(urls3)
             }
         })
     })
+
+// 12)
+function fetchSequentially(firstUrl, secondUrl) {
+    return fetch(firstUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка HTTP: статус ${response.status}`);
+            }
+
+            return response.json();
+        })
+        .then(firstResult => {
+            return fetch(secondUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Ошибка HTTP: статус ${response.status}`);
+                }
+        
+                return response.json();
+            })
+            .then(secondResult => {
+                return { firstResult, secondResult };
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            throw err; // проброс ошибки для внешней обработки
+        });
+}
+
+fetchSequentially('https://api.example.com/data1', 'https://api.example.com/data2')
+    .then(result => {
+        console.log('Результаты запросов:', result);
+    })
+    .catch(error => {
+        console.error('Ошибка при выполнении запросов:', error);
+    });
+
+// 13)
+function analyzeRequests(urls) {
+    const fetchPromises = urls.map(url => fetch(url).then(response => response.json()));
+
+    return Promise.allSettled(fetchPromises)
+        .then (results => {
+            const analysis = results.reduce((acc, result) => {
+                if (result.status === 'fulfilled') {
+                    acc.successful++;
+                } else {
+                    acc.failed++;
+                }
+                return acc;
+            }, { successful: 0, failed: 0 });
+
+            return analysis;
+        });
+}
+
+analyzeRequests(['https://api.example.com/data1', 'https://nonexistent.example.com', 'https://api.example.com/data2'])
+    .then(analysis => console.log('Анализ результатов:', analysis))
+    .catch(error => console.error('Ошибка:', error));

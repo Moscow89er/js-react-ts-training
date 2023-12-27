@@ -114,3 +114,57 @@ function isEvenNumber(number, callback) {
 asyncFilter([1, 2, 3, 4, 5, 6], isEvenNumber, (filteredArray) => {
     console.log(filteredArray); // Должно выводить [2, 4, 6]
 });
+
+// 4) Асинхронное чтение файла и обработка данных (Node.js)
+const fs = require('fs');
+
+function readFileAndProcess(path, callback) {
+    fs.readFile(path, 'utf-8', (error, data) => {
+        if (error) {
+            return callback(error);
+        }
+
+        const wordCount = data.split(' ').length;
+        callback(null, wordCount);
+    })
+
+}
+
+readFileAndProcess('path/to/your/textfile.txt', (error, count) => {
+    if (error) {
+        console.error('Произошла ошибка:', error);
+        return;
+    }
+    console.log(`Количество слов в файле: ${count}`);
+});
+
+// 5) Асинхронная загрузка изображения с колбэком
+function loadImage(url, callback) {
+    const img = new Image();
+
+    img.onload = function() {
+        callback(null, img);
+    }
+
+    img.onerror = function() {
+        callback(new Error('Не удалось загрузить изображение'));
+    }
+
+    img.src = url;
+}
+
+// Тестирование функции
+loadImage('path/to/your/image.jpg', (error, image) => {
+    if (error) {
+        console.error('Ошибка при загрузке изображения:', error);
+    } else {
+        document.body.appendChild(image); // Отображение изображения на странице
+        console.log('Изображение успешно загружено');
+    }
+})
+
+loadImage('path/to/nonexistent/image.jpg', (error, image) => {
+    if (error) {
+        console.error('Ошибка при загрузке изображения:', error);
+    }
+});
