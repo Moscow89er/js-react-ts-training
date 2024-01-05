@@ -59,3 +59,28 @@ async function fetchData(url) {
         return null;
     }
 }
+
+// 4)
+async function loadAndProcessData(firstUrl, secondUrl) {
+    try {
+        const results = [];
+
+        const firstResponse = await fetch(firstUrl);
+        if (!firstResponse.ok) {
+            throw new Error("Ошибка при загрузке данных с первого URL");
+        }
+        const firstData = await firstResponse.json();
+
+        const secondResponse = await fetch(secondUrl);
+        if (!secondResponse.ok) {
+            throw new Error("Ошибка при загрузке данных со второго URL");
+        }
+        const secondData = await secondResponse.json();
+
+        results.push(firstData, secondData);
+
+        return results;
+    } catch (err) {
+        console.error(err);
+    }
+}

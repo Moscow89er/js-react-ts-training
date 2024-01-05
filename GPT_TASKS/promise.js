@@ -332,3 +332,36 @@ function analyzeRequests(urls) {
 analyzeRequests(['https://api.example.com/data1', 'https://nonexistent.example.com', 'https://api.example.com/data2'])
     .then(analysis => console.log('Анализ результатов:', analysis))
     .catch(error => console.error('Ошибка:', error));
+
+// 14)
+function loadMultipleUrls(urls) {
+    return Promise.all(urls.map(url => fetch(url)
+        .then(response => {
+            if (response.ok) {
+                const data = response.json();
+                return data;
+            } else {
+                throw new Error("Ошибка загрузки данных");
+            }
+        })
+    ))
+    .then(results => {
+        console.log("Все данные успешно загружены", results);
+        return results;
+    })
+    .catch(err => {
+        console.error("Ошибка в одном из запросов", err);
+        // Можно здесь решить, нужно ли пробрасывать ошибку дальше или обрабатывать её здесь
+        throw err;
+    })
+}
+
+// 15)
+function fetchWithTimeout(url, delay) {
+    return Promise.race([
+        fetch(url).then(response => response.json()),
+        new Promise((_, reject) => 
+            setTimeout(() => reject(new Error("Таймаут запроса")), delay)
+        )
+    ])
+}
