@@ -49,3 +49,46 @@ const objToRead = {
         console.log(prop);
     }
 })()
+
+// 3) Постраничная загрузка данных
+async function* paginatedDataLoader() {
+    let page = 1;
+    let hasMore = true;
+
+    while (hasMore) {
+        const data = await fetchData(page); // предположим, что функция fetchData определена
+        if (data && data.length > 0) {
+            yield data;
+            page++;
+        } else {
+            hasMore = false;
+        }
+    }
+}
+
+// for await (const pageData of paginatedDataLoader()) {
+//     console.log(pageData);
+// }
+
+// 4) Асинхронный итератор для обработки событий
+const eventStream = createEventStream(); // Функция создания асинхронного потока событий
+
+const eventProcessor = {
+    async [Symbol.asyncIterator]() {
+        return {
+            next: async () => {
+                const event = await eventStream.getNextEvent();
+                if (event) {
+                    return { value: event, done: false };
+                } else {
+                    return { done: true };
+                }
+            }
+        }
+    }
+}
+
+// Использование итератора
+// for await (const event of eventProcessor) {
+//     console.log(event);
+// }
