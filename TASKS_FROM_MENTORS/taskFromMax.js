@@ -425,3 +425,25 @@ const book = {
 for (const pageContent of book) {
   console.log(pageContent);
 }
+
+// 14) Реализация await в виде функции, принимающей генератор
+function runGenerator(genFunc) {
+  const generator = genFunc();
+
+  function handleNext(value) {
+      const next = generator.next(value);
+      if (next.done) return Promise.resolve(next.value);
+      return Promise.resolve(next.value).then(handleNext);
+  }
+
+  return handleNext();
+}
+
+function* gen() {
+  const firstResult = yield fetchSomeData();
+  console.log(firstResult);
+  const secondResult = yield fetchMoreData(firstResult);
+  console.log(secondResult);
+}
+
+runGenerator(gen);
