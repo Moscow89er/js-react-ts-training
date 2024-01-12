@@ -274,4 +274,76 @@ function getBasicReflectObj() {
     console.log(user.name);
 }
 
-getBasicReflectObj();
+// getBasicReflectObj();
+
+// 2)
+function representProxyWithReflect() {
+    let user = {
+        name: "Vasya"
+    };
+
+    user = new Proxy(user, {
+        get(target, prop, receiver) {
+            console.log(`GET ${prop}`);
+
+            return Reflect.get(target, prop, receiver); // читаем свойство объекта
+        },
+
+        set(target, prop, val, receiver) {
+            console.log(`SET ${prop}=${val}`);
+
+            // записываем свойство и возвращаем true при успехе, иначе false
+            return Reflect.set(target, prop, val, receiver); 
+        }
+    });
+
+    let name = user.name; // выводит "GET name"
+    user.name = "Petya"; // выводит "SET name=Petya"
+}
+
+// representProxyWithReflect();
+
+// 3)
+function getCorrectInheritanceWithProxy() {
+    let user = {
+        _name: "Guest",
+        get name() {
+            return this.name;
+        }
+    };
+
+    const userProxy = new Proxy(user, {
+        get (target, prop, receiver) {
+            return Reflect.get(target, prop, receiver);
+
+            // или
+            // return Reflect.get(...arguments);
+        }
+    });
+
+    const admin = {
+        __proto__: userProxy,
+        _name: "Admin"
+    };
+
+    console.log(admin._name);
+}
+
+// getCorrectInheritanceWithProxy();
+
+// 4)
+function getMapWithStaticMethodsWithProxy() {
+    let map = new Map();
+
+    const proxy = new Proxy(map, {
+        get(target, prop, receiver) {
+            const value = Reflect.get(...arguments);
+            return typeof value === "function" ? value.bind(target) : value;
+        }
+    });
+
+    proxy.set("test", 1);
+    console.log(proxy.get("test")); // 1 (работает)
+}
+
+getMapWithStaticMethodsWithProxy();
