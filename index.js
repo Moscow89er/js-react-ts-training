@@ -63,10 +63,8 @@ function getIncapsulatedNumberIntl() {
 // Задача
 let animals = ["тигр", "ёж", "енот", "ехидна", "АИСТ", "ЯК"];
 
-collator = new Intl.Collator(undefined, {
-    usage: "sort"
-})
+const collator = new Intl.Collator();
 
-collator.compare(animals);
+animals.sort((a, b) => collator.compare(a, b));
 
 console.log(animals);
