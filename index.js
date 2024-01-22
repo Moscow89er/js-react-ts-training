@@ -31,14 +31,62 @@ function createCalendar(elem, year, month) {
     table += "</tr></table>";
   
     elem.innerHTML = table;
+}
+  
+function getDay(date) {
+  let day = date.getDay();
+
+  if (day == 0) day = 7;
+
+  return day - 1;
+}
+  
+createCalendar(calendar, 2012, 9);
+
+// 2)
+function createWatch() {
+  const startBtn = document.querySelector(".startBtn");
+  const stopBtn = document.querySelector(".stopBtn");
+
+  let time = document.createElement("div");
+
+  let hour = "hh";
+  let min = "mm";
+  let sec = "ss"
+
+  time.textContent = `${hour}:${min}:${sec}`;
+
+  document.body.prepend(time);
+
+  let timerId;
+
+  function startWatch() {
+    startBtn.addEventListener("click", () => {
+      clearInterval(timerId);
+      
+      timerId = setInterval(() => {
+        let today = new Date();
+
+        hour = today.getHours();
+        min = today.getMinutes();
+        sec = today.getSeconds();
+
+        if (hour < 10) hour = "0" + hour;
+        if (min < 10) min = "0" + min;
+        if (sec < 10) sec = "0" + sec;
+        
+        time.textContent = `${hour}:${min}:${sec}`;
+      }, 1000);
+    });
   }
-  
-  function getDay(date) {
-    let day = date.getDay();
-  
-    if (day == 0) day = 7;
-  
-    return day - 1;
+
+  function stopWatch() {
+    stopBtn.addEventListener("click", () => {
+      clearInterval(timerId);
+      timerId = null;
+    })
   }
-  
-  createCalendar(calendar, 2012, 9);
+
+  startWatch();
+  stopWatch();
+}
