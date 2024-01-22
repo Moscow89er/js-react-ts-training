@@ -1,70 +1,44 @@
-// weakRef.js
-// Применение WeakRef для кеширования
-function getIncapsulatedFirstExample() {
-    function fetchImg() {
-        // абстрактная функция для загрузки изображения...
+// document.js
+
+// 1) Календарь в виде таблицы
+function createCalendar(elem, year, month) {
+    const mon = month - 1;
+  
+    let d = new Date(year, mon);
+  
+    let table = "<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>";
+  
+    for (let i = 0; i < getDay(d); i++) {
+      table += "<td></td>";
     }
-
-    function weakRefCache(fetchImg) {
-        const imgCache = new Map();
-
-        return (imgName) => {
-            const cachedImg = imgCache.get(imgName);
-
-            if (cachedImg?.deref()) {
-                return cachedImg?.deref();
-            }
-
-            const newImg = fetchImg(imgName);
-            imgCache.set(imgName, new weakRefCache(newImg));
-
-            return newImg;
-        }
+  
+    while (d.getMonth() == mon) {
+      table += "<td>" + d.getDate() + "</td>";
+  
+      if (getDay(d) % 7 == 6) {
+        table += "</tr><tr>";
+      }
+  
+      d.setDate(d.getDate() + 1);
     }
-
-    const getCachedImg = weakRefCache(fetchImg);
-}
-
-// finalizationRegistry.js
-// 1)
-function getIncapsulatedSecondExample() {
-    const user = { name: "Nick" };
-
-    const registry = new FinalizationRegistry((heldValue) => {
-        console.log(`${heldValue} был собран сборщиком мусора.`);
-    });
-
-    registry.register(user, user.name);
-}
-
-// 2) Кеширование с FinalizationRegistry
-function getIncapsulatedThirdExample() {
-    function fetchImg() {
-        // абстрактная функция для загрузки изображения...
+  
+    if (getDay(d) != 0) {
+      for (let i = getDay(d); i < 7; i++) {
+        table += "<td></td>";
+      }
     }
-
-    function weakRefCache(fetchImg) {
-        const imgCache = new Map();
-
-        const registry = new FinalizationRegistry((imgName) => {
-            const cachedImg = imgCache.get(imgName);
-            if (cachedImg && !cachedImg.deref()) imgCache.delete(imgName);
-        });
-
-        return (imgName) => {
-            const cachedImg = imgCache.get(imgName);
-
-            if (cachedImg?.deref()) {
-                return cachedImg?.deref();
-            }
-
-            const newImg = fetchImg(imgName);
-            imgCache.set(imgName, new weakRefCache(newImg));
-            registry.register(newImg, imgName);
-
-            return newImg;
-        }
-    }
-
-    const getCachedImg = weakRefCache(fetchImg);
-}
+  
+    table += "</tr></table>";
+  
+    elem.innerHTML = table;
+  }
+  
+  function getDay(date) {
+    let day = date.getDay();
+  
+    if (day == 0) day = 7;
+  
+    return day - 1;
+  }
+  
+  createCalendar(calendar, 2012, 9);
