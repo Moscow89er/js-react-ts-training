@@ -117,3 +117,24 @@ showNotification({
   html: "Hello!", // HTML-уведомление
   className: "welcome" // дополнительный класс для div (необязательно)
 });
+
+// 4) Распахнуть элемент на всю высоту
+element.style.height = `${element.scrollHeight}px`;
+
+// 5)
+function getScrollBarWidth() {
+  let div = document.createElement("div");
+
+  div.style.overflowY = "scroll";
+  div.style.width = "50px";
+  div.style.height = "50px";
+
+  document.body.append(div);
+  const scrollWidth = div.offsetWidth - div.clientWidth;
+
+  div.remove();
+
+  console.log(scrollWidth);
+}
+
+getScrollBarWidth();
