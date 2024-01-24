@@ -208,3 +208,17 @@ function applyingForAbsolutePositioning() {
   document.body.append(message);
   setTimeout(() => message.remove(), 5000);
 }
+
+// 9)
+function getCoords() {
+  let fieldCoords = field.getBoundingClientRect();
+
+  const answer = [
+    `firstAnswer: x = ${Math.round(fieldCoords.left)}, y = ${Math.round(fieldCoords.top)}`,
+    `secondAnswer: x = ${Math.round(fieldCoords.right)}, y = ${Math.round(fieldCoords.bottom)}`,
+    `thirdAnswer: x = ${Math.round(fieldCoords.left + field.clientLeft)}, y = ${Math.round(fieldCoords.top + field.clientTop)}`,
+    `fourthAnswer: x = ${Math.round(fieldCoords.left + field.offsetWidth - field.clientLeft)}, y = ${Math.round(fieldCoords.top + field.offsetHeight - field.clientTop)}`
+  ]
+
+  console.log(answer);
+}
