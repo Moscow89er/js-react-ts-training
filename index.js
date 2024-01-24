@@ -175,3 +175,36 @@ function applyingForFixedPositioning() {
   document.body.append(message);
   setTimeout(() => message.remove(), 5000);
 }
+
+// 8)
+function applyingForAbsolutePositioning() {
+  // получаем координаты элемента в контексте документа
+  function getCoords(elem) {
+    const box = elem.getBoundingClientRect();
+
+    return {
+      top: box.top + window.pageYOffset,
+      right: box.right + window.pageXOffset,
+      bottom: box.bottom + window.pageYOffset,
+      left: box.left + window.pageXOffset
+    };
+  }
+
+  function createMessageUnder(elem, html) {
+    const message = document.createElement("div");
+    message.style.cssText = "position:absolute; color: red";
+
+    let coords = getCoords(elem);
+
+    message.style.left = coords.left + "px";
+    message.style.top = coords.bottom + "px";
+
+    message.innerHTML = html;
+
+    return message;
+  }
+
+  let message = createMessageUnder(elem, "Hello!");
+  document.body.append(message);
+  setTimeout(() => message.remove(), 5000);
+}
