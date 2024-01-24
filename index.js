@@ -147,3 +147,31 @@ function putBallInCenterWithoutCss() {
   ball.style.left = Math.round(field.clientWidth / 2 - ball.offsetWidth / 2) + "px";
   ball.style.top = Math.round(field.clientHeight / 2 - ball.offsetHeight / 2) + "px";
 }
+
+// 7)
+function applyingForFixedPositioning() {
+  const elem = document.getElementById("coords-show-mark");
+
+  function createMessageUnder(elem, html) {
+    // создаём элемент, который будет содержать сообщение
+    let message = document.createElement("div");
+    // для стилей лучше было бы использовать css-класс здесь
+    message.style.cssText = "position:fixed; color: red";
+
+    // устанавливаем координаты элементу, не забываем про "px"!
+    const coords = elem.getBoundingClientRect();
+
+    message.style.left = coords.left + "px";
+    message.style.top = coords.bottom + "px";
+
+    message.innerHTML = html;
+
+    return message;
+  }
+
+  // Использование:
+  // добавим сообщение на страницу на 5 секунд
+  let message = createMessageUnder(elem, "Hello!");
+  document.body.append(message);
+  setTimeout(() => message.remove(), 5000);
+}
