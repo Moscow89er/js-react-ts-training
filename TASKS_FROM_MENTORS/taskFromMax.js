@@ -439,10 +439,18 @@ function runGenerator(genFunc) {
   return handleNext();
 }
 
+// Верная функция для получения данных
+function fetchSomeData(arg, ret) {
+  return new Promise(res => setTimeout(() => {
+    console.log(arg);
+    res(ret); // Используем res для возвращения значения
+  }, 1000));
+}
+
 function* gen() {
-  const firstResult = yield fetchSomeData();
+  const firstResult = yield fetchSomeData(1, 3);
   console.log(firstResult);
-  const secondResult = yield fetchMoreData(firstResult);
+  const secondResult = yield fetchSomeData(2, 4);
   console.log(secondResult);
 }
 
