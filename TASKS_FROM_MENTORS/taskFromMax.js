@@ -455,3 +455,55 @@ function* gen() {
 }
 
 runGenerator(gen);
+
+// 15)
+// With given example, need to write prototype analog
+
+// class BasicItem {
+// 	constructor(_testProp) {
+// 		this._parentProp = _testProp + 100;
+// 	}
+
+// 	getParentProp() {
+// 		return this._parentProp;
+// 	}
+// }
+// //
+// class Item extends BasicItem {
+// 	static data = 5;
+
+// 	constructor(_testProp) {
+// 		super(_testProp);
+// 		this._testProp = _testProp;
+// 	}
+
+// 	getProp() {
+// 		return this._testProp + this.getParentProp() + Item.data;
+// 	}
+// }
+// //
+// log(new Item(1000).getProp()); // expect 2105
+
+function BasicItem(_testProp) {
+  this._parentProp = _testProp + 100;
+}
+
+BasicItem.prototype.getParentProp = function () {
+  return this._parentProp;
+}
+
+function Item(_testProp) {
+  BasicItem.call(this, _testProp);
+  this._testProp = _testProp;
+}
+
+Item.prototype = Object.create(BasicItem.prototype);
+Item.prototype.constructor = Item;
+
+Item.data = 5;
+
+Item.prototype.getProp = function () {
+  return this._testProp + this.getParentProp() + Item.data;
+}
+
+console.log(new Item(1000).getProp()); //2105
