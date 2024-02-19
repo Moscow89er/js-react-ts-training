@@ -507,3 +507,28 @@ Item.prototype.getProp = function () {
 }
 
 console.log(new Item(1000).getProp()); //2105
+
+// 16) Какой будет порядок вызовов в консоль
+console.log(0); // 1
+setTimeout(() => console.log(1), 50); // 11
+setTimeout(console.log, 0, 2); // 6
+new Promise((resolve) => { 
+  console.log(3); // 2
+  setTimeout(() => resolve(4)); // 7
+})
+  .then(console.log)
+  .then(() => console.log(5)) // 8
+  .catch(() => console.log(6))
+  .then(() => {
+    setTimeout(() => console.log(7)); // 10
+  })
+  .then(console.log(8)); // 3
+
+setTimeout(() => {
+  console.log(9); // 9
+});
+Promise.reject(10) // 5
+  .then(() => console.log(11)) 
+  .catch(console.log);
+
+console.log(12); // 4
