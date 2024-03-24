@@ -88,7 +88,7 @@ function searchAndReplace() {
     console.log(complexObject);
   }
   
-  // searchAndReplace();
+  searchAndReplace();
   
   function serializeObj() {
     // Задача 2: Сериализация объекта
@@ -199,3 +199,116 @@ function searchAndReplace() {
   }
   
   serializeObj();
+
+  function countingDataTypeOccurrences() {
+    // Задача 3: Подсчет вхождений типов данных
+    // Задание: Разработайте функцию, которая анализирует сложный вложенный объект и возвращает объект,
+    // содержащий подсчет количества вхождений каждого типа данных (string, number, object, array,
+    // boolean, null, undefined, function, symbol, и специальные типы) во всех уровнях вложенности.
+    // Функция должна корректно обрабатывать циклические ссылки и специальные типы объектов, не
+    // учитывая их более одного раза в общем подсчете.
+  
+    let complexObject = {
+      name: "Alice",
+      age: 30,
+      hobbies: ["reading", "cycling", "hiking"],
+      education: {
+        primary: "Springfield Elementary",
+        highSchool: "Springfield High",
+        college: "Springfield College"
+      },
+      workExperience: [
+        {
+          company: "Tech Solutions",
+          position: "Developer",
+          years: 5
+        },
+        {
+          company: "Innovate Tech",
+          position: "Senior Developer",
+          years: "3"
+        }
+      ],
+      favoriteQuote: "To be or not to be, that is the question.",
+      personalInfo: {
+        spouse: {
+          name: "Bob",
+          age: 32,
+          hobbies: ["golfing", "fishing"]
+        },
+        children: [
+          {
+            name: "Charlie",
+            age: 5,
+            favoriteToy: "Lego"
+          }
+        ]
+      }
+    };
+    
+    // Добавляем циклическую ссылку
+    complexObject.personalInfo.spouse.partner = complexObject;
+    complexObject.self = complexObject;
+    
+    // Добавляем специальный тип объекта - дату
+    complexObject.anniversary = new Date("2015-06-15");
+  
+    function countingDataTypes(obj, counted = new Set(), countingObj = null) {
+      if (counted.has(obj)) return countingObj;
+  
+      // Инициализация объекта подсчета, если он еще не был создан
+      if (!countingObj) {
+        countingObj = {
+          object: 0,
+          array: 0,
+          func: 0,
+          string: 0,
+          number: 0,
+          boolean: 0,
+          null: 0,
+          undefined: 0,
+          symbol: 0,
+          date: 0,
+          regExp: 0
+        };
+      }
+  
+      let type = typeof obj;
+  
+      if (obj === null) {
+        type = "null";
+      } else if (Array.isArray(obj)) {
+        type = "array";
+      } else if (obj instanceof RegExp) {
+        type = "regExp";
+      } else if (obj instanceof Date) {
+        type = "date";
+      } else if (obj instanceof Function) {
+        type = "func";
+        // Подсчет собственных свойств функции, если они есть
+        Object.keys(obj).forEach(key => countingDataTypes(obj[key], counted, countingObj))
+      } else if (obj instanceof Symbol) {
+        type = "symbol";
+      } else if (type === "object") {
+        type = "object";
+      }
+  
+      countingObj[type] = (countingObj[type] || 0) + 1;
+      if (typeof obj === "object" && obj !== null) {
+        counted.add(obj);
+  
+        for (let key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            countingDataTypes(obj[key], counted);
+          }
+        }
+      }
+  
+      return countingObj;
+    }
+  
+    let result = countingDataTypes(complexObject);
+    console.log(result);
+  }
+  
+  countingDataTypeOccurrences();
