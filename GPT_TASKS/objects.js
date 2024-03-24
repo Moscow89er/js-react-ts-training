@@ -150,13 +150,14 @@ function searchAndReplace() {
         const path = this.path || "root";
   
         if (typeof value === "object" && value !== null) {
-          if (seenObjects.has(value)) {
-            return { cyclicReference: seenObjects.get(value) };
-          }
+            if (seenObjects.has(value)) {
+              // Если объект уже встречался, возвращаем ссылку на путь
+              return { cyclicReference: seenObjects.get(value) };
+            }
+            // Для нового объекта сохраняем его текущий путь
+            const newPath = path === "root" ? key : `${path}.${key}`;
+            seenObjects.set(value, newPath);
         }
-  
-        // Запоминаем путь для текущего объекта
-        seenObjects.set(value, path);
   
         // Обработка специальных типов
         if (value instanceof Date) {
@@ -167,13 +168,29 @@ function searchAndReplace() {
           return `RegExp(${value})`;
         }
   
-        return value;
+        return value; // Возвращаем значение, если оно не требует специальной обработки
       }
   
       return JSON.stringify(obj, function (key, value) {
-        this.path = (this.path ? this.path + "." : "") + key;
-        return replacer.call(this, key, value);
-      });
+        if (!this.path) {
+            this.path = []; // Инициализация пути для корневого объекта
+        }
+      
+        // Ключ для массивов или ключевое значение для объектов
+        const actualKey = Array.isArray(this) ? `[${key}]` : key;
+    
+        if (key !== "") {
+            this.path.push(actualKey); // Обновляем путь, если это не корневой вызов
+        }
+    
+        const result = replacer.call({ path: this.path.join('.') }, key, value);
+    
+        if (key !== "") {
+            this.path.pop(); // Возвращаемся назад по пути
+        }
+    
+        return result;
+      }, 2); // Форматирование вывода для лучшей читаемости
     }
     
     const json = serializeWithCycles(complexObject);
